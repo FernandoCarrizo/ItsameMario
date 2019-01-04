@@ -1,7 +1,7 @@
 var Wejscie = {
 	ini: function(dane) {
 		document.onkeydown = function(event) {
-			Wejscie.zadania.nacisniety[event.keyCode] = true;
+      Wejscie.zadania.nacisniety[event.keyCode] = true;
 		}
 		
 		document.onkeyup = function(event) {
@@ -28,6 +28,9 @@ var Wejscie = {
 					for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
 						dane.obiekty.tabelaPotworow[i].x -= mario.pedX;
 					}
+          for( var i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
+						dane.obiekty.tabelaMonet[i].x -= mario.pedX;
+					}
 				}
 			}
 		}
@@ -47,11 +50,14 @@ var Wejscie = {
 					for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
 						dane.obiekty.tabelaPotworow[i].x += mario.pedX;
 					}
+          for( var i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
+						dane.obiekty.tabelaMonet[i].x += mario.pedX;
+					}
 				}
 			}
 		}
 		if(Wejscie.zadania.Nacisnieto(32)) {
-			mario.obecnyStan = mario.stan.skakanie;
+			mario.obecnyStan = mario.stan.skakanie;      
 		}
 	},
 	

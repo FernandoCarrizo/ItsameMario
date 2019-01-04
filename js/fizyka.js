@@ -36,6 +36,11 @@ var Fizyka = {
 			dane.obiekty.tabelaPotworow.forEach(function(potwor) {
 				WykrywanieKolizji(potwor);
 			});
+      
+      dane.obiekty.tabelaMonet.forEach(function(moneta) {
+				WykrywanieKolizji(moneta);
+			});
+            
 		},
 		
 		WykrywanieKolizji2: function(dane, p) {
@@ -79,6 +84,10 @@ var Fizyka = {
 					dane.obiekty.tabelaPotworow.splice(nrPotwora, 1);
 					mario.obecnyStan = mario.stan.skakanie;
 					mario.pedY = -20.5;
+          
+          dane.audio.skok.pause();
+          dane.audio.skok.currentTime = .1;
+          dane.audio.skok.play();
 				}
 				
 				if(mario.x<p.x && mario.y>= p.y) {
@@ -98,7 +107,13 @@ var Fizyka = {
 						Smierc.wywolanie(dane);
 					}, 750);
 				}
-			}
+			} else if(obiekt.typ === "moneta") {
+        var nrMonety = dane.obiekty.tabelaMonet.indexOf(obiekt);
+        dane.obiekty.tabelaMonet.splice(nrMonety, 1);
+        mario.monety++;
+        
+        dane.audio.moneta.cloneNode(true).play();
+      }
 		},
 		
 		Kolizja2: function(obiekt, p) {
