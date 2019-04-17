@@ -14,51 +14,43 @@ class Wejscie {
 	aktualizacja(dane) {
 		let mario = dane.obiekty.mario;
 		
-		if(this.nacisnieto(39)) {
+		if(this.nacisnieto(39) && !mario.momentSmierci) {
 			mario.kierunek = "prawo";
-			if(mario.pedY == 0) {
-				mario.obecnyStan = mario.stan.poruszanie;
-			} else {
-				if(mario.x < dane.canvas.fgCtx.canvas.width/2 || dane.obiekty.mapa.x <= dane.canvas.fgCtx.canvas.width-dane.obiekty.mapa.w) {
-					mario.x += mario.pedX;
-				} else {
-					dane.obiekty.mapa.x -= mario.pedX;
-					for( let i = 0; i<dane.obiekty.tabelaScian.length; i++) {
-						dane.obiekty.tabelaScian[i].x -= mario.pedX;
-					}
-					for( let i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
-						dane.obiekty.tabelaPotworow[i].x -= mario.pedX;
-					}
-					for( let i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
-						dane.obiekty.tabelaMonet[i].x -= mario.pedX;
-					}
-				}
+			if(mario.pedX < 10) {
+				mario.pedX+=1;
 			}
-		}
-		if(this.nacisnieto(37)) {
-			mario.kierunek = "lewo";
 			
 			if(mario.pedY == 0) {
 				mario.obecnyStan = mario.stan.poruszanie;
 			} else {
-				if(mario.x > dane.canvas.fgCtx.canvas.width/2 || dane.obiekty.mapa.x >= 0) {
-					mario.x -= mario.pedX;
-				} else {
-					dane.obiekty.mapa.x += mario.pedX;
-					for( let i = 0; i<dane.obiekty.tabelaScian.length; i++) {
-						dane.obiekty.tabelaScian[i].x += mario.pedX;
-					}
-					for( let i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
-						dane.obiekty.tabelaPotworow[i].x += mario.pedX;
-					}
-					for( let i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
-						dane.obiekty.tabelaMonet[i].x += mario.pedX;
-					}
-				}
+				mario.obecnyStan = mario.stan.skakanie;
 			}
+		} 
+		else if(mario.pedX > 0 && !mario.momentSmierci) {
+			if(mario.obecnyStan != mario.stan.skakanie) mario.obecnyStan = mario.stan.poruszanie;
+			mario.pedX-=1;
 		}
+		
+		
+		if(this.nacisnieto(37) && !mario.momentSmierci) {
+			mario.kierunek = "lewo";
+			if(mario.pedX > -10) {
+				mario.pedX-=1;
+			}
+			
+			if(mario.pedY == 0) {
+				mario.obecnyStan = mario.stan.poruszanie;
+			} else {
+				mario.obecnyStan = mario.stan.skakanie;
+			}
+		} 
+		else if(mario.pedX < 0 && !mario.momentSmierci) {
+			if(mario.obecnyStan != mario.stan.skakanie) mario.obecnyStan = mario.stan.poruszanie;
+			mario.pedX+=1;
+		}
+		
 		if(this.nacisnieto(32)) {
-			mario.obecnyStan = mario.stan.skakanie;      
+			if(!mario.momentSmierci) mario.obecnyStan = mario.stan.skakanie;      
 		}
 	}
 	

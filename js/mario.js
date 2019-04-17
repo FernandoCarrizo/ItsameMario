@@ -36,16 +36,27 @@ class Mario {
 			skakanie: {
 				ruch: (dane) => {
 					if(this.pedY==0) {
-						this.pedY-=23.5;
-		  
-						// dane.audio.skok.pause();
-						// dane.audio.skok.currentTime = 0;
-						// dane.audio.skok.play();
+						this.pedY-=23.5;						
 					}
+					
+					if(((this.x - this.pedX <= dane.canvas.fgCtx.canvas.width/2 || dane.obiekty.mapa.x - this.pedX < dane.canvas.fgCtx.canvas.width - dane.obiekty.mapa.w) && this.kierunek === "prawo") || ((this.x - this.pedX > dane.canvas.fgCtx.canvas.width/2 || dane.obiekty.mapa.x - this.pedX >= 0) && this.kierunek === "lewo")) {
+						this.x += this.pedX;
+					} else {
+						dane.obiekty.mapa.x -= this.pedX;
+						for( let i = 0; i<dane.obiekty.tabelaScian.length; i++) {
+							dane.obiekty.tabelaScian[i].x -= this.pedX;
+						}	
+						for( let i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
+							dane.obiekty.tabelaPotworow[i].x -= this.pedX;
+						}	
+						for( let i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
+							dane.obiekty.tabelaMonet[i].x -= this.pedX;
+						}
+					}					
 				},
 				animacja: (dane) => {
-					if(this.kierunek==="prawo") {
-						this.obraz = this.animacja.skokPrawo;
+					if(this.kierunek === "prawo") {
+						this.obraz = this.animacja.skokPrawo;	
 					} else {
 						this.obraz = this.animacja.skokLewo;
 					}
@@ -53,57 +64,41 @@ class Mario {
 			},
 			poruszanie: {
 				ruch: (dane) => {
-					if(this.kierunek==="prawo") {
-						if(this.x < dane.canvas.fgCtx.canvas.width/2 || dane.obiekty.mapa.x <= dane.canvas.fgCtx.canvas.width-dane.obiekty.mapa.w) {
-							this.x += this.pedX;
-						} else {
-							dane.obiekty.mapa.x -= this.pedX;
-							for( let i = 0; i<dane.obiekty.tabelaScian.length; i++) {
-								dane.obiekty.tabelaScian[i].x -= this.pedX;
-							}
-							for( let i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
-								dane.obiekty.tabelaPotworow[i].x -= this.pedX;
-							}
-							for( let i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
-								dane.obiekty.tabelaMonet[i].x -= this.pedX;
-							}
-						}
+					if(((this.x - this.pedX <= dane.canvas.fgCtx.canvas.width/2 || dane.obiekty.mapa.x - this.pedX < dane.canvas.fgCtx.canvas.width - dane.obiekty.mapa.w) && this.kierunek === "prawo") || ((this.x - this.pedX > dane.canvas.fgCtx.canvas.width/2 || dane.obiekty.mapa.x - this.pedX >= 0) && this.kierunek === "lewo")) {
+						this.x += this.pedX;
 					} else {
-						if(this.x > dane.canvas.fgCtx.canvas.width/2 || dane.obiekty.mapa.x >= 0) {
-							this.x -= this.pedX;
-						} else {
-							dane.obiekty.mapa.x += this.pedX;
-							for( let i = 0; i<dane.obiekty.tabelaScian.length; i++) {
-								dane.obiekty.tabelaScian[i].x += this.pedX;
-							}
-							for( let i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
-								dane.obiekty.tabelaPotworow[i].x += this.pedX;
-							}
-							for( let i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
-								dane.obiekty.tabelaMonet[i].x += this.pedX;
-							}
-			
+						dane.obiekty.mapa.x -= this.pedX;
+						for( let i = 0; i<dane.obiekty.tabelaScian.length; i++) {
+							dane.obiekty.tabelaScian[i].x -= this.pedX;
 						}
-					}
+						for( let i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
+							dane.obiekty.tabelaPotworow[i].x -= this.pedX;
+						}	
+						for( let i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
+							dane.obiekty.tabelaMonet[i].x -= this.pedX;
+						}	
+					}	
 				},
-				animacja:  (dane) => {
-					if(this.kierunek === "prawo") {
+				animacja: (dane) => {
+					if(this.kierunek === "prawo") {						
+						var typPoruszanie = this.animacja.poruszaniePrawo;
 						if(dane.nrKlatki % 5 == 0) {
-							this.obraz = this.animacja.poruszaniePrawo.klatka[this.animacja.poruszaniePrawo.obecnaKlatka];
-							this.animacja.poruszaniePrawo.obecnaKlatka++;
+							this.obraz = typPoruszanie.klatka[typPoruszanie.obecnaKlatka];
+							typPoruszanie.obecnaKlatka++;
 						}
 						
-						if(this.animacja.poruszaniePrawo.obecnaKlatka>3) {
-							this.animacja.poruszaniePrawo.obecnaKlatka=0;
-						}
+						if(typPoruszanie.obecnaKlatka>3) {
+							typPoruszanie.obecnaKlatka=0;
+						}											
 					} else {
+						var typPoruszanie = this.animacja.poruszanieLewo;
 						if(dane.nrKlatki % 5 == 0) {
-							this.obraz = this.animacja.poruszanieLewo.klatka[this.animacja.poruszanieLewo.obecnaKlatka];
-							this.animacja.poruszanieLewo.obecnaKlatka++;
+							this.obraz = typPoruszanie.klatka[typPoruszanie.obecnaKlatka];
+							typPoruszanie.obecnaKlatka++;
 						}
 						
-						if(this.animacja.poruszanieLewo.obecnaKlatka>3) {
-							this.animacja.poruszanieLewo.obecnaKlatka=0;
+						if(typPoruszanie.obecnaKlatka>3) {
+							typPoruszanie.obecnaKlatka=0;
 						}
 					}
 				}
@@ -117,17 +112,17 @@ class Mario {
 				}
 			}
 		};
-		this.obecnyStan = this.stan.stanie;
-		this.kierunek = "prawo";
-		this.x =x;
+		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
 		this.pedY = 1;
-		this.pedX = 8;
+		this.pedX = 0;
 		this.zycia = 3;
 		this.momentSmierci = false;
 		this.monety = 0;
 		this.typ = "mario";
+		this.kierunek = "prawo";
+		this.obecnyStan = this.stan.stanie;
 	}
 }

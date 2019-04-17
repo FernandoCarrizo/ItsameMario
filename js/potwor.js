@@ -14,11 +14,7 @@ class Potwor {
 		this.stan = {
 			poruszanie: {
 				ruch: (dane) => {
-					if(this.kierunek === "prawo") {
-						this.x += this.pedX;
-					} else {
-						this.x -= this.pedX;
-					}
+					this.x += this.pedX;
 				},
 				animacja: (dane) => {
 					if(dane.nrKlatki % 5 == 0) {
@@ -41,10 +37,9 @@ class Potwor {
 			}
 		};
 		this.obecnyStan = this.stan.poruszanie;
-		this.kierunek = "prawo";
 		this.pedY = 0;
-		this.pedX = 1;
-		this.x =x;
+		this.pedX = 2;
+		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
