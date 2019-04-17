@@ -1,4 +1,4 @@
-class Mario {
+class Mario { 
 	constructor(img, x, y, w, h) {
 		this.obraz= new Obraz(img, 1056, 208, 16, 16);
 		this.animacja = {
