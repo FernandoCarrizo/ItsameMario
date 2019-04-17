@@ -9,6 +9,7 @@ class Wejscie {
 		document.onkeyup = (event) => {
 			this.nacisniety[event.keyCode] = false;
 		}
+		
 	}
 	
 	aktualizacja(dane) {
@@ -57,4 +58,4 @@ class Wejscie {
 	nacisnieto(kod) {
 		return this.nacisniety[kod];
 	}
-}
+};

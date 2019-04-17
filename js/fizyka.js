@@ -30,13 +30,17 @@ class Fizyka {
 		
 		let mario = dane.obiekty.mario;
 		
-		if(!mario.momentSmierci) {	
-			dane.obiekty.tabelaScian.forEach((sciana) => {	
+		if(!mario.momentSmierci) {			
+			dane.obiekty.tabelaScian.forEach((sciana) => {
 				WykrywanieKolizji(mario, sciana);
 			});	
 									
 			dane.obiekty.tabelaMonet.forEach((moneta) => {
 				WykrywanieKolizji(mario, moneta);
+			});			
+			
+			dane.obiekty.tabelaBloczkowMonet.forEach((bloczekMonet) => {
+				WykrywanieKolizji(mario, bloczekMonet);
 			});
 		}	
 		
@@ -45,7 +49,10 @@ class Fizyka {
 			
 			dane.obiekty.tabelaScian.forEach((sciana) => {
 				WykrywanieKolizji(potwor, sciana);
-			});		
+			});	
+			dane.obiekty.tabelaBloczkowMonet.forEach((bloczekMonet) => {
+				WykrywanieKolizji(potwor, bloczekMonet);
+			});	
 		});	
 					
 	}
@@ -53,7 +60,7 @@ class Fizyka {
 	kolizja(obiekt1, obiekt2, dane) {
 		if(obiekt1.typ === "mario") {
 			let mario = obiekt1;
-			if(obiekt2.typ === "sciana") {
+			if(obiekt2.typ === "sciana" || obiekt2.typ === "bloczekMonet") {
 				let stronaKolizji = this.stronaKolizji(obiekt1, obiekt2);
 				
 				if(stronaKolizji[0]) {
@@ -64,6 +71,14 @@ class Fizyka {
 				if(stronaKolizji[2]) {
 					mario.y = obiekt2.y + obiekt2.h - 1;
 					if(mario.pedY < 0) mario.pedY = 1;
+					if(obiekt2.typ === "bloczekMonet") {
+						obiekt2.obecnyStan = obiekt2.stan.drganie;
+						obiekt2.obecnyStan.licznik = 0;	
+						obiekt2.y = obiekt2.sy;
+						obiekt2.moneta.y = obiekt2.sy;
+						if(obiekt2.monety > 0) mario.monety++;
+						obiekt2.monety--;
+					}
 				}
 				if(stronaKolizji[3]) {
 					mario.x = obiekt2.x - mario.w;
@@ -97,7 +112,7 @@ class Fizyka {
 				mario.monety++;
 			}
 		} else if(obiekt1.typ === "potwor") {
-			if(obiekt2.typ === "sciana") {
+			if(obiekt2.typ === "sciana" || obiekt2.typ === "bloczekMonet") {
 				let stronaKolizji = this.stronaKolizji(obiekt1, obiekt2);
 								
 				if(stronaKolizji[0]) {

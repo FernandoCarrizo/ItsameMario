@@ -1,5 +1,5 @@
 class Silnik {
-	constructor() {    		
+	constructor() {		
 		let canvas = {
 			skyCtx: document.getElementById("sky-canvas").getContext("2d"),
 			bgCtx: document.getElementById("bg-canvas").getContext("2d"),
@@ -7,7 +7,7 @@ class Silnik {
 		};
 		
 		let grafika = new Image();
-		grafika.src = "img/stylesheet.png";
+		grafika.src = "img/stylesheet.png";		
 		grafika.addEventListener("load", function() {
 			grafika = this;
 		});
@@ -27,33 +27,35 @@ class Silnik {
 		this.dane.canvas.skyCtx.imageSmoothingEnabled = false;
 		this.dane.canvas.bgCtx.imageSmoothingEnabled = false;
 		this.dane.canvas.fgCtx.imageSmoothingEnabled = false;
-          
-        this.dane.kontroler = {
+			  
+		//this.dane.audio.melodia.loop = true;
+		//this.dane.audio.melodia.play();
+        
+		this.dane.kontroler = {
 			wejscie: new Wejscie(),
-			obiekty: new Obiekty(this.dane),
+			obiekt: new Obiekty(this.dane),
 			animacje: new Animacje(),
 			fizyka: new Fizyka(),
 			render: new Render(),
 			poruszanie: new Poruszanie(),
 			smierc: new Smierc()
-		}  
+		}		
 		this.start();
 	}
 	
 	start() {
-            
-		let petla = () => {
+		
+		let petla = () => {	
 			this.dane.kontroler.wejscie.aktualizacja(this.dane);
 			this.dane.kontroler.poruszanie.aktualizacja(this.dane);
 			this.dane.kontroler.animacje.aktualizacja(this.dane);
 			this.dane.kontroler.fizyka.aktualizacja(this.dane);
 			this.dane.kontroler.render.aktualizacja(this.dane);
 			
-			this.dane.nrKlatki++;	
+			this.dane.nrKlatki++;
 			window.requestAnimationFrame(petla);
-		};		
+		}
 		petla();
 	}
-
 };
 window.onload = new Silnik();

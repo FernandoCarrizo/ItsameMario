@@ -1,4 +1,4 @@
-class Mario { 
+class Mario {
 	constructor(img, x, y, w, h) {
 		this.obraz= new Obraz(img, 1056, 208, 16, 16);
 		this.animacja = {
@@ -10,7 +10,7 @@ class Mario {
 				obecnaKlatka: 0
 			},
 			poruszanieLewo: {
-				klatka: [new Obraz(img,976,224,16,16),
+				klatka: [new  Obraz(img,976,224,16,16),
 						new Obraz(img,960,224,16,16),
 						new Obraz(img,976,224,16,16),
 						new Obraz(img,992,224,16,16)],
@@ -20,17 +20,18 @@ class Mario {
 			stanieLewo: new Obraz(img,1056,224,16,16),
 			skokPrawo: new Obraz(img,1024,208,16,16),
 			skokLewo: new Obraz(img,1024,224,16,16),
-			smierc: new Obraz(img, 1040, 208, 16, 16)
+			smierc: new Obraz(img, 1040, 208, 16, 16)		
 		};
 		this.stan = {
 			stanie: {
 				ruch: (dane) => {},
 				animacja: (dane) => {
-					if(this.kierunek==="prawo") {
-						this.obraz = this.animacja.staniePrawo;
+					if(this.kierunek === "prawo") {
+						this.obraz = this.animacja.staniePrawo;		
 					} else {
 						this.obraz = this.animacja.stanieLewo;
 					}
+					
 				}
 			},
 			skakanie: {
@@ -51,6 +52,10 @@ class Mario {
 						}	
 						for( let i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
 							dane.obiekty.tabelaMonet[i].x -= this.pedX;
+						}
+						for( let i = 0; i<dane.obiekty.tabelaBloczkowMonet.length; i++) {
+							dane.obiekty.tabelaBloczkowMonet[i].moneta.x -= this.pedX;
+							dane.obiekty.tabelaBloczkowMonet[i].x -= this.pedX;
 						}
 					}					
 				},
@@ -77,6 +82,10 @@ class Mario {
 						for( let i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
 							dane.obiekty.tabelaMonet[i].x -= this.pedX;
 						}	
+						for( let i = 0; i<dane.obiekty.tabelaBloczkowMonet.length; i++) {
+							dane.obiekty.tabelaBloczkowMonet[i].moneta.x -= this.pedX;
+							dane.obiekty.tabelaBloczkowMonet[i].x -= this.pedX;
+						}
 					}	
 				},
 				animacja: (dane) => {
@@ -104,10 +113,10 @@ class Mario {
 				}
 			},
 			smierc: {
-				ruch:  (dane) => {
+				ruch: (dane) => {
 					this.pedX = 0;
 				},
-				animacja:  (dane) => {
+				animacja: (dane) => {
 					this.obraz = this.animacja.smierc;
 				}
 			}
@@ -119,10 +128,10 @@ class Mario {
 		this.pedY = 1;
 		this.pedX = 0;
 		this.zycia = 3;
-		this.momentSmierci = false;
 		this.monety = 0;
 		this.typ = "mario";
 		this.kierunek = "prawo";
+		this.momentSmierci = false;
 		this.obecnyStan = this.stan.stanie;
 	}
-}
+};

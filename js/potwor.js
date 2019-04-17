@@ -1,9 +1,11 @@
-class Potwor { 
+class Potwor {
 	constructor(img, x, y, w, h) {
+		let wnetrze = this;
+		
 		this.obraz = new Obraz(img, 960, 240, 16, 16);
 		this.animacja = {
 			poruszanie: {
-				klatka: [new Obraz(img, 960, 240, 16, 16),
+				klatka: [	new Obraz(img, 960, 240, 16, 16),
 							new Obraz(img, 976, 240, 16, 16),
 							new Obraz(img, 992, 240, 16, 16),
 							new Obraz(img, 1008, 240, 16, 16)],
@@ -13,36 +15,36 @@ class Potwor {
 		};
 		this.stan = {
 			poruszanie: {
-				ruch: (dane) => {
-					this.x += this.pedX;
+				ruch: function(dane) {
+					wnetrze.x += wnetrze.pedX;
 				},
-				animacja: (dane) => {
+				animacja: function(dane) {
 					if(dane.nrKlatki % 5 == 0) {
-						this.obraz = this.animacja.poruszanie.klatka[this.animacja.poruszanie.obecnaKlatka];
-						this.animacja.poruszanie.obecnaKlatka++;
+						wnetrze.obraz = wnetrze.animacja.poruszanie.klatka[wnetrze.animacja.poruszanie.obecnaKlatka];
+						wnetrze.animacja.poruszanie.obecnaKlatka++;
 					}
 					
-					if(this.animacja.poruszanie.obecnaKlatka > 3) {
-						this.animacja.poruszanie.obecnaKlatka = 0;
+					if(wnetrze.animacja.poruszanie.obecnaKlatka > 3) {
+						wnetrze.animacja.poruszanie.obecnaKlatka = 0;
 					}
 				}
 			},
 			skakanie: {
-				ruch: (dane) => {
+				ruch: function(dane) {
 					return;
 				},
-				animacja: (dane) => {
-					this.obraz = this.animacja.skok;
+				animacja: function(dane) {
+					wnetrze.obraz = wnetrze.animacja.skok;
 				}
 			}
 		};
-		this.obecnyStan = this.stan.poruszanie;
+		this.obecnyStan = wnetrze.stan.poruszanie;
 		this.pedY = 0;
 		this.pedX = 2;
-		this.x = x;
+		this.x =x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
 		this.typ = "potwor";
 	}
-}
+};
