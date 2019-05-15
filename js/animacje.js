@@ -1,34 +1,62 @@
-var Animacje = {
-	aktualizacja: function(dane) {
-		Animacje.zadania.Niebo(dane);
-		Animacje.zadania.Mario(dane);
-		Animacje.zadania.Potwor(dane);
-		Animacje.zadania.Moneta(dane);
-	},
+class Animacje {
+	aktualizacja(dane) {
+		this.niebo(dane);
+		this.mario(dane);
+		this.potwor(dane);
+		this.moneta(dane);
+		this.bloczekMonet(dane);
+		this.bloczekGrzybow(dane);
+		this.pocisk(dane);
+		this.fragmentBloczkow(dane);
+	}
 	
-	zadania: {
-		Niebo: function(dane) {
-			dane.obiekty.niebo.x -=1;
-			
-			if(dane.obiekty.niebo.x < -1440) {
-				dane.obiekty.niebo.x = 0;
-			}
-		},
+	niebo(dane) {
+		dane.obiekty.niebo.x -=1;
 		
-		Mario: function(dane) {
-			dane.obiekty.mario.obecnyStan.animacja(dane);
-		},
-		
-		Potwor: function(dane) {
-			dane.obiekty.tabelaPotworow.forEach(function(p) {
-				p.obecnyStan.animacja(dane);
-			});
-		},
+		if(dane.obiekty.niebo.x < -1440) {
+			dane.obiekty.niebo.x = 0;
+		}
+	}
+	
+	mario(dane) {
+		dane.obiekty.mario.obecnyStan.animacja(dane);
+	}
+	
+	potwor(dane) {
+		dane.obiekty.tabelaPotworow.forEach((p) => {
+			p.obecnyStan.animacja(dane);
+		});
+	}
     
-    Moneta: function(dane) {
-      dane.obiekty.tabelaMonet.forEach(function(m) {
-				m.obecnyStan.animacja(dane);
-			});
+    moneta(dane) {
+		dane.obiekty.tabelaMonet.forEach((m) => {
+			m.obecnyStan.animacja(dane);
+		});
     }
+	
+	bloczekMonet(dane) {
+		dane.obiekty.tabelaBloczkowMonet.forEach((bm) => {
+			bm.moneta.obecnyStan.animacja(dane);
+			bm.obecnyStan.animacja(dane);
+		});
+	}
+	
+	bloczekGrzybow(dane) {
+		dane.obiekty.tabelaBloczkowGrzybow.forEach((bg) => {
+			if(bg.grzyb != null) bg.grzyb.obecnyStan.animacja(dane);
+			bg.obecnyStan.animacja(dane);
+		});
+	}
+	
+	pocisk(dane) {
+		dane.obiekty.tabelaPociskow.forEach((p) => {
+			p.obecnyStan.animacja(dane);
+		});
+	}
+	
+	fragmentBloczkow(dane) {
+		dane.obiekty.tabelaFragmentowBloczkow.forEach((fb) => {
+			fb.obecnyStan.animacja(dane);
+		});
 	}
 }

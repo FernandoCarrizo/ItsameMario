@@ -1,71 +1,75 @@
-var Wejscie = {
-	ini: function(dane) {
-		document.onkeydown = function(event) {
-      Wejscie.zadania.nacisniety[event.keyCode] = true;
+class Wejscie {
+	constructor(dane) {
+		this.nacisniety = {};
+		
+		document.onkeydown = (event) => {
+			this.nacisniety[event.keyCode] = true;
 		}
 		
-		document.onkeyup = function(event) {
-			Wejscie.zadania.nacisniety[event.keyCode] = false;
+		document.onkeyup = (event) => {
+			this.nacisniety[event.keyCode] = false;
 		}
-	},
+		
+	}
 	
-	aktualizacja: function(dane) {
-		var mario = dane.obiekty.mario;
+	aktualizacja(dane) {
+		let mario = dane.obiekty.mario;
 		
-		if(Wejscie.zadania.Nacisnieto(39)) {
+		if(this.nacisnieto(39) && !mario.momentSmierci) {
 			mario.kierunek = "prawo";
+			if(mario.pedX < 10) {
+				mario.pedX+=1;
+			}
 			
 			if(mario.pedY == 0) {
 				mario.obecnyStan = mario.stan.poruszanie;
 			} else {
-				if(mario.x < dane.canvas.fgCanvas.width/2 || dane.obiekty.mapa.x <= dane.canvas.fgCanvas.width-dane.obiekty.mapa.w) {
-					mario.x += mario.pedX;
-				} else {
-					dane.obiekty.mapa.x -= mario.pedX;
-					for( var i = 0; i<dane.obiekty.tabelaScian.length; i++) {
-						dane.obiekty.tabelaScian[i].x -= mario.pedX;
-					}
-					for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
-						dane.obiekty.tabelaPotworow[i].x -= mario.pedX;
-					}
-          for( var i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
-						dane.obiekty.tabelaMonet[i].x -= mario.pedX;
-					}
-				}
+				mario.obecnyStan = mario.stan.skakanie;
 			}
+		} 
+		else if(mario.pedX > 0 && !mario.momentSmierci) {
+			if(mario.obecnyStan != mario.stan.skakanie) mario.obecnyStan = mario.stan.poruszanie;
+			mario.pedX-=1;
 		}
-		if(Wejscie.zadania.Nacisnieto(37)) {
-			mario.kierunek = "lewo";
-			
-			if(mario.pedY == 0) {
-				mario.obecnyStan = mario.stan.poruszanie;
-			} else {
-				if(mario.x > dane.canvas.fgCanvas.width/2 || dane.obiekty.mapa.x >= 0) {
-					mario.x -= mario.pedX;
-				} else {
-					dane.obiekty.mapa.x += mario.pedX;
-					for( var i = 0; i<dane.obiekty.tabelaScian.length; i++) {
-						dane.obiekty.tabelaScian[i].x += mario.pedX;
-					}
-					for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
-						dane.obiekty.tabelaPotworow[i].x += mario.pedX;
-					}
-          for( var i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
-						dane.obiekty.tabelaMonet[i].x += mario.pedX;
-					}
-				}
-			}
-		}
-		if(Wejscie.zadania.Nacisnieto(32)) {
-			mario.obecnyStan = mario.stan.skakanie;      
-		}
-	},
-	
-	zadania: {
-		nacisniety: {},
 		
-		Nacisnieto: function(kod) {
-			return Wejscie.zadania.nacisniety[kod];
+		
+		if(this.nacisnieto(37) && !mario.momentSmierci) {
+			mario.kierunek = "lewo";
+			if(mario.pedX > -10) {
+				mario.pedX-=1;
+			}
+			
+			if(mario.pedY == 0) {
+				mario.obecnyStan = mario.stan.poruszanie;
+			} else {
+				mario.obecnyStan = mario.stan.skakanie;
+			}
+		} 
+		else if(mario.pedX < 0 && !mario.momentSmierci) {
+			if(mario.obecnyStan != mario.stan.skakanie) mario.obecnyStan = mario.stan.poruszanie;
+			mario.pedX+=1;
+		}
+		
+		if(this.nacisnieto(32)) {
+			if(!mario.momentSmierci) mario.obecnyStan = mario.stan.skakanie;      
+		}
+		
+		if(this.nacisnieto(17) && mario.strzelanie) {
+			if(mario.naladowany) {
+				mario.naladowany = false;
+				if(mario.kierunek==="prawo") {
+					dane.obiekty.tabelaPociskow.push(new  Pocisk(dane.grafika, mario.x+mario.w/4, mario.y+mario.h/4, 30, 30, 12));
+				} else {
+					dane.obiekty.tabelaPociskow.push(new  Pocisk(dane.grafika, mario.x+mario.w/4, mario.y+mario.h/4, 30, 30, -12));
+				}
+				setTimeout(()=> {
+					mario.naladowany = true;
+				}, 300);
+			}
 		}
 	}
-}
+	
+	nacisnieto(kod) {
+		return this.nacisniety[kod];
+	}
+};

@@ -1,78 +1,61 @@
-var Silnik = {
-	ini: function() {    
-    var skyCanvas = document.getElementById("sky-canvas");
-		var bgCanvas = document.getElementById("bg-canvas");
-		var fgCanvas = document.getElementById("fg-canvas");
-		
-		var canvas = {
-			skyCanvas: skyCanvas,
-			bgCanvas: bgCanvas,
-			fgCanvas: fgCanvas,
-			skyCtx: skyCanvas.getContext("2d"),
-			bgCtx: bgCanvas.getContext("2d"),
-			fgCtx: fgCanvas.getContext("2d"),
+class Silnik {
+	constructor() {		
+		let canvas = {
+			skyCtx: document.getElementById("sky-canvas").getContext("2d"),
+			bgCtx: document.getElementById("bg-canvas").getContext("2d"),
+			fgCtx: document.getElementById("fg-canvas").getContext("2d"),
 		};
 		
-		var grafika = new Image();
-		grafika.src = "img/stylesheet.png";
-		
+		let grafika = new Image();
+		grafika.src = "img/stylesheet.png";		
 		grafika.addEventListener("load", function() {
-			var grafika = this;
+			grafika = this;
 		});
 		
-		var dane = {
+		this.dane = {
 			nrKlatki: 0,
 			canvas: canvas,
 			grafika: grafika,
-      audio: {
-        melodia: new Audio("audio/theme_melody.mp3"),
-        skok: new Audio("audio/jump_melody.mp3"),
-        moneta: new Audio("audio/coin_melody.mp3")
-      }
+			audio: {
+				//melodia: new Audio("audio/theme_melody.mp3"),
+				//skok: new Audio("audio/jump_melody.mp3"),
+				//moneta: new Audio("audio/coin_melody.mp3")
+			},
+			kontroler: {}
 		};
     
-    dane.canvas.skyCtx.imageSmoothingEnabled = false;
-    dane.canvas.bgCtx.imageSmoothingEnabled = false;
-    dane.canvas.fgCtx.imageSmoothingEnabled = false;
-          
-    dane.audio.melodia.loop = true;
-    setTimeout(function() {
-      dane.audio.melodia.play();
-    }, 1000);
-          
-		Wejscie.ini(dane);
-		Obiekty.ini(dane);
-		Silnik.start(dane);
-	},
-	
-	start: function(dane) {
-            
-		var petla = function() {
-			Silnik.wejscie(dane);
-			Silnik.aktualizacje(dane);
-			Silnik.render(dane);
-			
-			dane.nrKlatki++;
-			
-			window.requestAnimationFrame(petla);
-		};
-		
-		petla();
-	},
-	
-	wejscie: function(dane) {
-		Wejscie.aktualizacja(dane);
-	},
-	
-	aktualizacje: function(dane) {
-		Poruszanie.aktualizacja(dane);
-		Animacje.aktualizacja(dane);
-		Fizyka.aktualizacja(dane);
-	},
-	
-	render: function(dane) {
-		Render.aktualizacja(dane);
+		this.dane.canvas.skyCtx.imageSmoothingEnabled = false;
+		this.dane.canvas.bgCtx.imageSmoothingEnabled = false;
+		this.dane.canvas.fgCtx.imageSmoothingEnabled = false;
+			  
+		//this.dane.audio.melodia.loop = true;
+		//this.dane.audio.melodia.play();
+        
+		this.dane.kontroler = {
+			wejscie: new Wejscie(),
+			obiekt: new Obiekty(this.dane),
+			animacje: new Animacje(),
+			fizyka: new Fizyka(),
+			render: new Render(),
+			poruszanie: new Poruszanie(),
+			smierc: new Smierc()
+		}		
+		this.start();
 	}
-
+	
+	start() {
+		
+		let petla = () => {	
+			this.dane.kontroler.wejscie.aktualizacja(this.dane);
+			this.dane.kontroler.poruszanie.aktualizacja(this.dane);
+			this.dane.kontroler.animacje.aktualizacja(this.dane);
+			this.dane.kontroler.fizyka.aktualizacja(this.dane);
+			this.dane.kontroler.render.aktualizacja(this.dane);
+			
+			this.dane.nrKlatki++;
+			window.requestAnimationFrame(petla);
+		}
+		petla();
+	}
 };
-window.onload = Silnik.ini();
+window.onload = new Silnik();
