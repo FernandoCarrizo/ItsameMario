@@ -39,11 +39,9 @@ class Mario {
         ruch: (dane) => {
           if(this.pedY==0) {
             this.pedY-=23.5;
-
-            dane.audio.skok.pause();
-            dane.audio.skok.currentTime = 0;
-            dane.audio.skok.play();
           }
+
+          this.kontrolerRuchu(dane);
         },
         animacja: (dane) => {
           if(this.kierunek==="prawo") {
@@ -55,38 +53,7 @@ class Mario {
       },
       poruszanie: {
         ruch: (dane) => {
-          if(this.kierunek==="prawo") {
-            if(this.x < dane.canvas.fgCtx.canvas.width/2 || dane.obiekty.mapa.x <= dane.canvas.fgCtx.canvas.width-dane.obiekty.mapa.w) {
-              this.x += this.pedX;
-            } else {
-              dane.obiekty.mapa.x -= this.pedX;
-              for( var i = 0; i<dane.obiekty.tabelaScian.length; i++) {
-                dane.obiekty.tabelaScian[i].x -= this.pedX;
-              }
-              for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
-                dane.obiekty.tabelaPotworow[i].x -= this.pedX;
-              }
-              for( var i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
-                dane.obiekty.tabelaMonet[i].x -= this.pedX;
-              }
-            }
-          } else {
-            if(this.x > dane.canvas.fgCtx.canvas.width/2 || dane.obiekty.mapa.x >= 0) {
-              this.x -= this.pedX;
-            } else {
-              dane.obiekty.mapa.x += this.pedX;
-              for( var i = 0; i<dane.obiekty.tabelaScian.length; i++) {
-                dane.obiekty.tabelaScian[i].x += this.pedX;
-              }
-              for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
-                dane.obiekty.tabelaPotworow[i].x += this.pedX;
-              }
-              for( var i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
-                dane.obiekty.tabelaMonet[i].x += this.pedX;
-              }
-
-            }
-          }
+          this.kontrolerRuchu(dane);
         },
         animacja: (dane) => {
           if(this.kierunek === "prawo") {
@@ -131,5 +98,22 @@ class Mario {
     this.momentSmierci = false;
     this.monety = 0;
     this.typ = "mario";
+  }
+
+  kontrolerRuchu(dane) {
+    if(((this.x - this.pedX <= dane.canvas.fgCtx.canvas.width/2 || dane.obiekty.mapa.x - this.pedX < dane.canvas.fgCtx.canvas.width - dane.obiekty.mapa.w) && this.kierunek === "prawo") || ((this.x - this.pedX > dane.canvas.fgCtx.canvas.width/2 || dane.obiekty.mapa.x - this.pedX >= 0) && this.kierunek === "lewo")) {
+      this.x += this.pedX;
+    } else {
+      dane.obiekty.mapa.x -= this.pedX;
+      for( var i = 0; i<dane.obiekty.tabelaScian.length; i++) {
+        dane.obiekty.tabelaScian[i].x -= this.pedX;
+      }
+      for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
+        dane.obiekty.tabelaPotworow[i].x -= this.pedX;
+      }
+      for( var i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
+        dane.obiekty.tabelaMonet[i].x -= this.pedX;
+      }
+    }
   }
 }
