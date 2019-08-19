@@ -29,6 +29,14 @@ class Render {
     dane.obiekty.tabelaPlatform.forEach((p) => {
 			this.rysuj(p, dane.canvas.fgCtx);
 		});
+
+    dane.obiekty.tabelaBloczkowCegiel.forEach((bc) => {
+			this.rysuj(bc, dane.canvas.fgCtx);
+		});
+
+    dane.obiekty.tabelaFragmentowCegiel.forEach((fc) => {
+			this.rysuj(fc, dane.canvas.fgCtx);
+		});
   }
 
   rysuj(co, gdzie) {
