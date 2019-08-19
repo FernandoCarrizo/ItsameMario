@@ -4,7 +4,7 @@ class Animacje {
 		this.mario(dane);
 		this.potwor(dane);
 		this.moneta(dane);
-    this.bloczekMonet(dane);
+		this.bloczekMonet(dane);
 	}
 
   niebo(dane) {
@@ -32,9 +32,9 @@ class Animacje {
   }
 
   bloczekMonet(dane) {
-    dane.obiekty.tabelaBloczkowMonet.forEach(function(bm) {
-      bm.obecnyStan.animacja(dane);
-      bm.moneta.obecnyStan.animacja(dane);
-    });
-  }
+		dane.obiekty.tabelaBloczkowMonet.forEach((bm) => {
+			bm.moneta.obecnyStan.animacja(dane);
+			bm.obecnyStan.animacja(dane);
+		});
+	}
 }

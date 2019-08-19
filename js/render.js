@@ -6,6 +6,7 @@ class Render {
 		this.rysuj(dane.obiekty.mapa, dane.canvas.bgCtx);
 
 		dane.canvas.fgCtx.clearRect(0,0, dane.canvas.fgCtx.canvas.width, dane.canvas.fgCtx.canvas.height);
+		this.rysuj(dane.obiekty.mario, dane.canvas.fgCtx);
 
 		this.pisz("Lives: " + dane.obiekty.mario.zycia, dane.canvas.fgCtx, 16, 32, "16px", "PixelEmulator");
 		this.pisz("Score: " + dane.obiekty.mario.monety, dane.canvas.fgCtx, 772, 32, "16px", "PixelEmulator");
@@ -21,11 +22,13 @@ class Render {
 		});
 
     dane.obiekty.tabelaBloczkowMonet.forEach((bm) => {
-      if(bm.monety > 0) this.rysuj(bm.moneta, dane.canvas.fgCtx);
-			this.rysuj(bm, dane.canvas.fgCtx);
+			if(bm.monety > 0) this.rysuj(bm.moneta, dane.canvas.bgCtx);
+			this.rysuj(bm, dane.canvas.bgCtx);
 		});
 
-		this.rysuj(dane.obiekty.mario, dane.canvas.fgCtx);
+    dane.obiekty.tabelaPlatform.forEach((p) => {
+			this.rysuj(p, dane.canvas.fgCtx);
+		});
   }
 
   rysuj(co, gdzie) {

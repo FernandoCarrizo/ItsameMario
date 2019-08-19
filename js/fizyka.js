@@ -44,8 +44,12 @@ class Fizyka {
 			});
 
       dane.obiekty.tabelaBloczkowMonet.forEach((bloczekMonet) => {
-				wykrywanieKolizji(mario, bloczekMonet);
-			});
+        wykrywanieKolizji(mario, bloczekMonet);
+      });
+
+      dane.obiekty.tabelaPlatform.forEach((platforma) => {
+        wykrywanieKolizji(mario, platforma);
+      });
     }
 
     dane.obiekty.tabelaPotworow.forEach((potwor) => {
@@ -58,6 +62,10 @@ class Fizyka {
       dane.obiekty.tabelaBloczkowMonet.forEach((bloczekMonet) => {
 				wykrywanieKolizji(potwor, bloczekMonet);
 			});
+
+      dane.obiekty.tabelaPlatform.forEach((platforma) => {
+        wykrywanieKolizji(potwor, platforma);
+      });
     });
   }
 
@@ -65,24 +73,26 @@ class Fizyka {
     let stronaKolizji = this.stronaKolizji(obiekt1, obiekt2);
     if(obiekt1.typ === "mario") {
       let mario = obiekt1;
-      if(obiekt2.typ === "sciana" || obiekt2.typ==="bloczekMonet") {
+      if(obiekt2.typ === "sciana" || obiekt2.typ === "bloczekMonet" || obiekt2.typ === "platforma") {
         if(stronaKolizji[0]) {
           mario.obecnyStan = mario.stan.stanie;
           mario.y = obiekt2.y - mario.h;
           mario.pedY = 0;
+          if(obiekt2.typ === "platforma") {
+            mario.pedX = obiekt2.pedX;
+            mario.kontrolerRuchu(dane);
+          }
         }
         if(stronaKolizji[2]) {
           mario.y = obiekt2.y + obiekt2.h - 1;
           if(mario.pedY < 0) mario.pedY = 1;
-          if(obiekt2.typ==="bloczekMonet") {
+          if(obiekt2.typ === "bloczekMonet") {
             obiekt2.obecnyStan = obiekt2.stan.drganie;
             obiekt2.obecnyStan.licznik = 0;
             obiekt2.y = obiekt2.sy;
             obiekt2.moneta.y = obiekt2.sy;
-            if(obiekt2.monety > 0) {
-              mario.monety++;
-              obiekt2.monety--;
-            }
+            if(obiekt2.monety > 0) mario.monety++;
+            obiekt2.monety--;
           }
         }
         if(stronaKolizji[3]) {
@@ -115,11 +125,14 @@ class Fizyka {
       }
     } else if(obiekt1.typ === "potwor") {
       let potwor = obiekt1;
-      if(obiekt2.typ === "sciana" || obiekt2.typ==="bloczekMonet") {
+      if(obiekt2.typ === "sciana" || obiekt2.typ === "bloczekMonet" || obiekt2.typ === "platforma") {
         if(stronaKolizji[0]) {
           potwor.obecnyStan = potwor.stan.poruszanie;
           potwor.y = obiekt2.y - potwor.h;
           potwor.pedY = 0;
+          if(obiekt2.typ === "platforma") {
+            potwor.x += obiekt2.pedX;
+          }
         }
         if(stronaKolizji[3]) {
           potwor.x = obiekt2.x - potwor.w;
