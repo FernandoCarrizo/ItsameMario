@@ -1,7 +1,7 @@
 var Fizyka = {
 	aktualizacja: function(dane) {
 		Fizyka.zadania.Grawitacja(dane.obiekty.mario);
-		Fizyka.zadania.WykrywanieKolizji(dane);
+		if(!dane.obiekty.mario.momentSmierci) Fizyka.zadania.WykrywanieKolizji(dane);
 		Fizyka.zadania.Smierc(dane);
 		
 		dane.obiekty.tabelaPotworow.forEach(function(p) {
@@ -12,7 +12,7 @@ var Fizyka = {
 	
 	zadania: {
 		Grawitacja: function(obiekt) {
-			obiekt.obecnyStan = obiekt.stan.skakanie;
+			if(!obiekt.momentSmierci) obiekt.obecnyStan = obiekt.stan.skakanie;
 			obiekt.pedY+=1;
 			obiekt.y+=obiekt.pedY;
 		},
@@ -31,6 +31,10 @@ var Fizyka = {
 			
 			dane.obiekty.tabelaScian.forEach(function(sciana) {
 				WykrywanieKolizji(sciana);
+			});
+			
+			dane.obiekty.tabelaPotworow.forEach(function(potwor) {
+				WykrywanieKolizji(potwor);
 			});
 		},
 		
@@ -67,6 +71,32 @@ var Fizyka = {
 				
 				if(mario.x > obiekt.x && mario.y + mario.h > obiekt.y && mario.y < obiekt.y + obiekt.h) {
 					mario.x = obiekt.x + obiekt.w;
+				}
+			} else if(obiekt.typ === "potwor") {
+				var p = obiekt;
+				if(mario.y+mario.h>=p.y && mario.x+mario.w>p.x+10 && mario.x<p.x+p.w-10 && mario.pedY >= 0) {
+					var nrPotwora = dane.obiekty.tabelaPotworow.indexOf(p);
+					dane.obiekty.tabelaPotworow.splice(nrPotwora, 1);
+					mario.obecnyStan = mario.stan.skakanie;
+					mario.pedY = -20.5;
+				}
+				
+				if(mario.x<p.x && mario.y>= p.y) {
+					mario.obecnyStan = mario.stan.smierc;
+					mario.pedY = -20.5;
+					mario.momentSmierci = true;
+					setTimeout(function() {
+						Smierc.wywolanie(dane);
+					}, 750);
+				}
+				
+				if(mario.x>p.x && mario.y>= p.y) {
+					mario.obecnyStan = mario.stan.smierc;
+					mario.pedY = -20.5;
+					mario.momentSmierci = true;
+					setTimeout(function() {
+						Smierc.wywolanie(dane);
+					}, 750);
 				}
 			}
 		},

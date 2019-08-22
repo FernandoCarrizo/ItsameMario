@@ -25,7 +25,7 @@ var Obiekty = {
 								[3120,144,48,48],[3024,336,48,48],[3216,336,48,48],[3504,480,288,48],[3552,432,240,48],[3600,384,192,48],
 								[3648,336,144,48],[3696,288,96,48],[3744,240,48,48],[-48,0,48,624],[4320,0,48,624]];
 								
-		var potwory = [[0,0],[48,0]];
+		var potwory = [[912, 480],[1440, 480], [2880, 480]];
 										
 		dane.obiekty = {};
 		dane.obiekty.niebo = niebo;
@@ -74,7 +74,8 @@ var Obiekty = {
 				staniePrawo: new Obiekty.zadania.Obraz(img,1056,208,16,16),
 				stanieLewo: new Obiekty.zadania.Obraz(img,1056,224,16,16),
 				skokPrawo: new Obiekty.zadania.Obraz(img,1024,208,16,16),
-				skokLewo: new Obiekty.zadania.Obraz(img,1024,224,16,16)
+				skokLewo: new Obiekty.zadania.Obraz(img,1024,224,16,16),
+				smierc: new Obiekty.zadania.Obraz(img, 1040, 208, 16, 16)
 			};
 			this.stan = {
 				stanie: {
@@ -152,6 +153,14 @@ var Obiekty = {
 							}
 						}
 					}
+				},
+				smierc: {
+					ruch: function(dane) {
+						wnetrze.pedX = 0;
+					}, 
+					animacja: function(dane) {
+						wnetrze.obraz = wnetrze.animacja.smierc;
+					}
 				}
 			};
 			this.obecnyStan = wnetrze.stan.stanie;
@@ -163,6 +172,7 @@ var Obiekty = {
 			this.pedY = 1;
 			this.pedX = 8;
 			this.zycia = 3;
+			this.momentSmierci = false;
 		},
 		
 		Potwor: function(img, x, y, w, h) {
