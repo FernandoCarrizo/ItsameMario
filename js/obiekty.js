@@ -46,7 +46,83 @@ var Obiekty = {
 		},
 		
 		Mario: function(img, x, y, w, h) {
+			var wnetrze = this;
+			
 			this.obraz= new Obiekty.zadania.Obraz(img, 1056, 208, 16, 16);
+			this.animacja = {
+				poruszaniePrawo: {
+					klatka: [new Obiekty.zadania.Obraz(img,976,208,16,16),
+					new Obiekty.zadania.Obraz(img,960,208,16,16),
+					new Obiekty.zadania.Obraz(img,976,208,16,16),
+					new Obiekty.zadania.Obraz(img,992,208,16,16)],
+					obecnaKlatka: 0
+				},
+				poruszanieLewo: {
+					klatka: [new Obiekty.zadania.Obraz(img,976,224,16,16),
+					new Obiekty.zadania.Obraz(img,960,224,16,16),
+					new Obiekty.zadania.Obraz(img,976,224,16,16),
+					new Obiekty.zadania.Obraz(img,992,224,16,16)],
+					obecnaKlatka: 0
+				},
+				staniePrawo: new Obiekty.zadania.Obraz(img,1056,208,16,16),
+				stanieLewo: new Obiekty.zadania.Obraz(img,1056,224,16,16),
+				skokPrawo: new Obiekty.zadania.Obraz(img,1024,208,16,16),
+				skokLewo: new Obiekty.zadania.Obraz(img,1024,224,16,16)
+			};
+			this.stan = {
+				stanie: {
+					ruch: function(dane) {
+						return;
+					},
+					animacja: function(dane) {
+						if(wnetrze.kierunk==="prawo") {
+							wnetrze.obraz = wnetrze.animacja.staniePrawo;
+						} else {
+							wnetrze.obraz = wnetrze.animacja.stanieLewo;
+						}
+					}
+				},
+				skakanie: {
+					ruch: function(dane) {
+						return;
+					},
+					animacja: function(dane) {
+						if(wnetrze.kierunk==="prawo") {
+							wnetrze.obraz = wnetrze.animacja.skokPrawo;
+						} else {
+							wnetrze.obraz = wnetrze.animacja.skokLewo;
+						}
+					}
+				},
+				poruszanie: {
+					ruch: function(dane) {
+						return;
+					},
+					animacja: function(dane) {
+						if(wnetrze.kierunk === "prawo") {
+							if(dane.numerKlatki % 5 == 0) {
+								wnetrze.obraz = wnetrze.animacja.poruszaniePrawo.klatka[wnetrze.animacja.poruszaniePrawo.obecnaKlatka];
+								wnetrze.animacja.poruszaniePrawo.obecnaKlatka++;
+							}
+							
+							if(wnetrze.animacja.poruszaniePrawo.obecnaKlatka>3) {
+								wnetrze.animacja.poruszaniePrawo.obecnaKlatka=0;
+							}
+						} else {
+							if(dane.numerKlatki % 5 == 0) {
+								wnetrze.obraz = wnetrze.animacja.poruszanieLewo.klatka[wnetrze.animacja.poruszanieLewo.obecnaKlatka];
+								wnetrze.animacja.poruszanieLewo.obecnaKlatka++;
+							}
+							
+							if(wnetrze.animacja.poruszanieLewo.obecnaKlatka>3) {
+								wnetrze.animacja.poruszanieLewo.obecnaKlatka=0;
+							}
+						}
+					}
+				}
+			};
+			this.obecnyStan = wnetrze.stan.stanie;
+			this.kierunk = "prawo";
 			this.x =x;
 			this.y = y;
 			this.w = w;
