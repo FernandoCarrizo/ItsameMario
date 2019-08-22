@@ -1,40 +1,34 @@
-class Animacje {
-  aktualizacja(dane) {
-		this.niebo(dane);
-		this.mario(dane);
-		this.potwor(dane);
-		this.moneta(dane);
-		this.bloczekMonet(dane);
-	}
-
-  niebo(dane) {
-    dane.obiekty.niebo.x -=1;
-
-    if(dane.obiekty.niebo.x < -1440) {
-      dane.obiekty.niebo.x = 0;
+var Animacje = {
+	aktualizacja: function(dane) {
+		Animacje.zadania.Niebo(dane);
+		Animacje.zadania.Mario(dane);
+		Animacje.zadania.Potwor(dane);
+		Animacje.zadania.Moneta(dane);
+	},
+	
+	zadania: {
+		Niebo: function(dane) {
+			dane.obiekty.niebo.x -=1;
+			
+			if(dane.obiekty.niebo.x < -1440) {
+				dane.obiekty.niebo.x = 0;
+			}
+		},
+		
+		Mario: function(dane) {
+			dane.obiekty.mario.obecnyStan.animacja(dane);
+		},
+		
+		Potwor: function(dane) {
+			dane.obiekty.tabelaPotworow.forEach(function(p) {
+				p.obecnyStan.animacja(dane);
+			});
+		},
+    
+    Moneta: function(dane) {
+      dane.obiekty.tabelaMonet.forEach(function(m) {
+				m.obecnyStan.animacja(dane);
+			});
     }
-  }
-
-  mario(dane) {
-    dane.obiekty.mario.obecnyStan.animacja(dane);
-  }
-
-  potwor(dane) {
-    dane.obiekty.tabelaPotworow.forEach(function(p) {
-      p.obecnyStan.animacja(dane);
-    });
-  }
-
-  moneta(dane) {
-    dane.obiekty.tabelaMonet.forEach(function(m) {
-      m.obecnyStan.animacja(dane);
-    });
-  }
-
-  bloczekMonet(dane) {
-		dane.obiekty.tabelaBloczkowMonet.forEach((bm) => {
-			bm.moneta.obecnyStan.animacja(dane);
-			bm.obecnyStan.animacja(dane);
-		});
 	}
 }
