@@ -26,6 +26,7 @@ var Silnik = {
 			grafika: grafika
 		};
 		
+		Obiekty.ini(dane);
 		Silnik.start(dane);
 	},
 	
@@ -37,7 +38,7 @@ var Silnik = {
 			
 			dane.nrKlatki++;
 			
-			window.requestAnimationFrame(pe`tla);
+			window.requestAnimationFrame(petla);
 		};
 		
 		petla();
@@ -48,11 +49,11 @@ var Silnik = {
 	},
 	
 	aktualizacje: function(dane) {
-		
+		Animacje.aktualizacja(dane);
 	},
 	
 	render: function(dane) {
-		
+		Render.aktualizacja(dane);
 	}
 };
 
