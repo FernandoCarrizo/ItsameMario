@@ -50,6 +50,7 @@ var Silnik = {
 	
 	aktualizacje: function(dane) {
 		Animacje.aktualizacja(dane);
+		Fizyka.aktualizacja(dane);
 	},
 	
 	render: function(dane) {
