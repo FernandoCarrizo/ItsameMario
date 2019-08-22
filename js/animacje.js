@@ -5,6 +5,7 @@ class Animacje {
 		this.potwor(dane);
 		this.moneta(dane);
 		this.bloczekMonet(dane);
+    this.bloczekGrzybow(dane);
 	}
 
   niebo(dane) {
@@ -37,4 +38,10 @@ class Animacje {
 			bm.obecnyStan.animacja(dane);
 		});
 	}
+
+  bloczekGrzybow(dane) {
+    dane.obiekty.tabelaBloczkowGrzybow.forEach((bg) => {
+      bg.obecnyStan.animacja(dane);
+    });
+  }
 }

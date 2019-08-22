@@ -37,6 +37,15 @@ class Render {
 			this.rysuj(fc, dane.canvas.fgCtx);
 		});
 
+    dane.obiekty.tabelaGrzybow.forEach((g) => {
+      this.rysuj(g, dane.canvas.fgCtx);
+    });
+
+    dane.obiekty.tabelaBloczkowGrzybow.forEach((bg) => {
+      this.rysuj(bg, dane.canvas.fgCtx);
+    });
+
+
 		this.rysuj(dane.obiekty.mario, dane.canvas.fgCtx);
   }
 

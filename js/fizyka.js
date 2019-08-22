@@ -7,8 +7,14 @@ class Fizyka {
 		});
 
     dane.obiekty.tabelaFragmentowCegiel.forEach((fc) => {
-			this.grawitacja(fc);
-		});
+      this.grawitacja(fc);
+    });
+
+    dane.obiekty.tabelaGrzybow.forEach((g) => {
+      if(g.obecnyStan != g.stan.wyjscie) {
+        this.grawitacja(g);
+      }
+    });
 
 		this.wykrywanieKolizji(dane);
 		this.smierc(dane);
@@ -60,6 +66,10 @@ class Fizyka {
       dane.obiekty.tabelaBloczkowCegiel.forEach((bloczekCegiel) => {
         wykrywanieKolizji(mario, bloczekCegiel);
       });
+
+      dane.obiekty.tabelaBloczkowGrzybow.forEach((bloczekGrzybow) => {
+        wykrywanieKolizji(mario, bloczekGrzybow);
+      });
     }
 
     dane.obiekty.tabelaPotworow.forEach((potwor) => {
@@ -80,6 +90,36 @@ class Fizyka {
       dane.obiekty.tabelaBloczkowCegiel.forEach((bloczekCegiel) => {
         wykrywanieKolizji(potwor, bloczekCegiel);
       });
+
+      dane.obiekty.tabelaBloczkowGrzybow.forEach((bloczekGrzybow) => {
+        wykrywanieKolizji(potwor, bloczekGrzybow);
+      });
+    });
+
+    dane.obiekty.tabelaGrzybow.forEach((grzyb) => {
+      if(grzyb.obecnyStan != grzyb.stan.wyjscie) {
+        if(!mario.momentSmierci) wykrywanieKolizji(mario, grzyb);
+
+        dane.obiekty.tabelaScian.forEach((sciana) => {
+  				wykrywanieKolizji(grzyb, sciana);
+  			});
+
+        dane.obiekty.tabelaBloczkowMonet.forEach((bloczekMonet) => {
+  				wykrywanieKolizji(grzyb, bloczekMonet);
+  			});
+
+        dane.obiekty.tabelaPlatform.forEach((platforma) => {
+          wykrywanieKolizji(grzyb, platforma);
+        });
+
+        dane.obiekty.tabelaBloczkowCegiel.forEach((bloczekCegiel) => {
+          wykrywanieKolizji(grzyb, bloczekCegiel);
+        });
+
+        dane.obiekty.tabelaBloczkowGrzybow.forEach((bloczekGrzybow) => {
+          wykrywanieKolizji(grzyb, bloczekGrzybow);
+        });
+      }
     });
   }
 
@@ -87,7 +127,7 @@ class Fizyka {
     let stronaKolizji = this.stronaKolizji(obiekt1, obiekt2);
     if(obiekt1.typ === "mario") {
       let mario = obiekt1;
-      if(obiekt2.typ === "sciana" || obiekt2.typ === "bloczekMonet" || obiekt2.typ === "platforma" || obiekt2.typ === "bloczekCegiel") {
+      if(obiekt2.typ === "sciana" || obiekt2.typ === "bloczekMonet" || obiekt2.typ === "platforma" || obiekt2.typ === "bloczekCegiel" || obiekt2.typ === "bloczekGrzybow") {
         if(stronaKolizji[0]) {
           mario.obecnyStan = mario.stan.stanie;
           mario.y = obiekt2.y - mario.h;
@@ -122,6 +162,15 @@ class Fizyka {
               obiekt2.obecnyStan = obiekt2.stan.drganie;
             }
           }
+          if(obiekt2.typ === "bloczekGrzybow") {
+            obiekt2.obecnyStan = obiekt2.stan.drganie;
+            if(obiekt2.pelny) {
+              dane.obiekty.tabelaGrzybow.push(
+                new Grzyb(dane.grafika, obiekt2.x, obiekt2.y, obiekt2.w, obiekt2.h, obiekt2.rodzaj)
+              );
+            }
+            obiekt2.pelny = false;
+          }
         }
         if(stronaKolizji[3]) {
           mario.x = obiekt2.x - mario.w;
@@ -153,7 +202,7 @@ class Fizyka {
       }
     } else if(obiekt1.typ === "potwor") {
       let potwor = obiekt1;
-      if(obiekt2.typ === "sciana" || obiekt2.typ === "bloczekMonet" || obiekt2.typ === "platforma" || obiekt2.typ === "bloczekCegiel") {
+      if(obiekt2.typ === "sciana" || obiekt2.typ === "bloczekMonet" || obiekt2.typ === "platforma" || obiekt2.typ === "bloczekCegiel"  || obiekt2.typ === "bloczekGrzybow") {
         if(stronaKolizji[0]) {
           potwor.obecnyStan = potwor.stan.poruszanie;
           potwor.y = obiekt2.y - potwor.h;
@@ -169,6 +218,26 @@ class Fizyka {
         if(stronaKolizji[1]) {
           potwor.x = obiekt2.x + obiekt2.w;
           potwor.pedX = 2;
+        }
+      }
+    } else if(obiekt1.typ === "grzyb") {
+      let grzyb = obiekt1;
+      if(obiekt2.typ === "sciana" || obiekt2.typ === "bloczekMonet" || obiekt2.typ === "platforma" || obiekt2.typ === "bloczekCegiel"  || obiekt2.typ === "bloczekGrzybow") {
+        if(stronaKolizji[0]) {
+          grzyb.obecnyStan = grzyb.stan.poruszanie;
+          grzyb.y = obiekt2.y - grzyb.h;
+          grzyb.pedY = 0;
+          if(obiekt2.typ === "platforma") {
+            grzyb.x += obiekt2.pedX;
+          }
+        }
+        if(stronaKolizji[3]) {
+          grzyb.x = obiekt2.x - grzyb.w;
+          grzyb.pedX = -2;
+        }
+        if(stronaKolizji[1]) {
+          grzyb.x = obiekt2.x + obiekt2.w;
+          grzyb.pedX = 2;
         }
       }
     }

@@ -34,6 +34,12 @@ class Smierc {
       for(let i = 0; i<dane.obiekty.tabelaFragmentowCegiel.length; i++) {
         dane.obiekty.tabelaFragmentowCegiel[i].x -= dane.obiekty.mapa.x;
       }
+      for(let i = 0; i<dane.obiekty.tabelaBloczkowGrzybow.length; i++) {
+        dane.obiekty.tabelaBloczkowGrzybow[i].x -= dane.obiekty.mapa.x;
+      }
+      for(let i = 0; i<dane.obiekty.tabelaGrzybow.length; i++) {
+        dane.obiekty.tabelaGrzybow[i].x -= dane.obiekty.mapa.x;
+      }
 
       dane.obiekty.mapa.x = mario.x = mario.y = 0;
       mario.pedY = 1;

@@ -95,7 +95,7 @@ class Mario {
     this.pedY = 1;
     this.pedX = 8;
     this.zycia = 3;
-    this.mozeNiszczyc = false;
+    this.mozeNiszczyc = true;
     this.momentSmierci = false;
     this.monety = 0;
     this.typ = "mario";
@@ -127,6 +127,12 @@ class Mario {
       }
       for( var i = 0; i<dane.obiekty.tabelaFragmentowCegiel.length; i++) {
         dane.obiekty.tabelaFragmentowCegiel[i].x -= this.pedX;
+      }
+      for( var i = 0; i<dane.obiekty.tabelaBloczkowGrzybow.length; i++) {
+        dane.obiekty.tabelaBloczkowGrzybow[i].x -= this.pedX;
+      }
+      for( var i = 0; i<dane.obiekty.tabelaGrzybow.length; i++) {
+        dane.obiekty.tabelaGrzybow[i].x -= this.pedX;
       }
     }
   }
