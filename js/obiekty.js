@@ -10,7 +10,7 @@ var Obiekty = {
 		
 		var mapa = {
 			obraz: new Obiekty.zadania.Obraz(dane.grafika, 0, 0, 1440, 208),
-			x: 0,
+			x: 0, 
 			y: 0,
 			w: 4320,
 			h: 624
@@ -26,6 +26,8 @@ var Obiekty = {
 								[3648,336,144,48],[3696,288,96,48],[3744,240,48,48],[-48,0,48,624],[4320,0,48,624]];
 								
 		var potwory = [[912, 480],[1440, 480], [2880, 480]];
+    
+    var monety = [[528,240],[576,240],[624,240]];
 										
 		dane.obiekty = {};
 		dane.obiekty.niebo = niebo;
@@ -33,6 +35,7 @@ var Obiekty = {
 		dane.obiekty.mario = mario;		
 		dane.obiekty.tabelaScian = [];
 		dane.obiekty.tabelaPotworow = [];
+    dane.obiekty.tabelaMonet = [];
 		
 		sciany.forEach(function(z) {
 			dane.obiekty.tabelaScian.push(new Obiekty.zadania.Sciana(z[0],z[1],z[2],z[3]));
@@ -40,6 +43,10 @@ var Obiekty = {
 		
 		potwory.forEach(function(p) {
 			dane.obiekty.tabelaPotworow.push(new Obiekty.zadania.Potwor(dane.grafika, p[0], p[1], 48, 48));
+		});
+    
+		monety.forEach(function(m) {
+			dane.obiekty.tabelaMonet.push(new Obiekty.zadania.Moneta(dane.grafika, m[0], m[1], 48, 48));
 		});
 	},
 	
@@ -117,6 +124,9 @@ var Obiekty = {
 								for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
 									dane.obiekty.tabelaPotworow[i].x -= wnetrze.pedX;
 								}
+                for( var i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
+									dane.obiekty.tabelaMonet[i].x -= wnetrze.pedX;
+								}
 							}
 						} else {
 							if(wnetrze.x > dane.canvas.fgCanvas.width/2 || dane.obiekty.mapa.x >= 0) {
@@ -129,6 +139,10 @@ var Obiekty = {
 								for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
 									dane.obiekty.tabelaPotworow[i].x += wnetrze.pedX;
 								}
+                for( var i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
+									dane.obiekty.tabelaMonet[i].x += wnetrze.pedX;
+								}
+                
 							}
 						}
 					},
@@ -173,6 +187,7 @@ var Obiekty = {
 			this.pedX = 8;
 			this.zycia = 3;
 			this.momentSmierci = false;
+      this.monety = 0;
 		},
 		
 		Potwor: function(img, x, y, w, h) {
@@ -228,6 +243,41 @@ var Obiekty = {
 			this.w = w;
 			this.h = h;
 		},
+    
+    Moneta: function(img,x,y,w,h) {
+      var wnetrze = this;
+      
+      this.obraz = new Obiekty.zadania.Obraz(img, 960, 256, 16, 16);
+      this.animacja = {
+        obrot: {
+          klatka: [new Obiekty.zadania.Obraz(img, 960, 256, 16, 16),
+                  new Obiekty.zadania.Obraz(img, 976, 256, 16, 16),
+                  new Obiekty.zadania.Obraz(img, 992, 256, 16, 16),
+                  new Obiekty.zadania.Obraz(img, 1008, 256, 16, 16)],
+          obecnaKlatka: 0
+        }
+      };
+      this.stan = {
+        obrot: {
+          animacja: function(dane) {
+            if(dane.nrKlatki % 5 == 0) {
+							wnetrze.obraz = wnetrze.animacja.obrot.klatka[wnetrze.animacja.obrot.obecnaKlatka];
+							wnetrze.animacja.obrot.obecnaKlatka++;
+						}
+						
+						if(wnetrze.animacja.obrot.obecnaKlatka > 3) {
+							wnetrze.animacja.obrot.obecnaKlatka = 0;
+						}
+          }
+        }
+      };
+      this.obecnyStan = wnetrze.stan.obrot;
+      this.x = x;
+			this.y = y;
+			this.w = w;
+			this.h = h;
+			this.typ = "moneta";
+    },
 		
 		Sciana: function(x,y,w,h) {
 			this.x =x;

@@ -25,6 +25,10 @@ var Silnik = {
 			canvas: canvas,
 			grafika: grafika
 		};
+    
+    dane.canvas.skyCtx.imageSmoothingEnabled = false;
+    dane.canvas.bgCtx.imageSmoothingEnabled = false;
+    dane.canvas.fgCtx.imageSmoothingEnabled = false;
 		
 		Wejscie.ini(dane);
 		Obiekty.ini(dane);

@@ -22,7 +22,11 @@ var Smierc = {
 				for(var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
 					dane.obiekty.tabelaPotworow[i].x -= dane.obiekty.mapa.x;
 				}
-				
+        
+        for(var i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
+					dane.obiekty.tabelaMonet[i].x -= dane.obiekty.mapa.x;
+				}
+        				
 				dane.obiekty.mapa.x = mario.x = mario.y = 0;
 				mario.pedY = 1;
 				mario.obecnyStan = mario.stan.stanie;

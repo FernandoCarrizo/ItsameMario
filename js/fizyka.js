@@ -36,6 +36,11 @@ var Fizyka = {
 			dane.obiekty.tabelaPotworow.forEach(function(potwor) {
 				WykrywanieKolizji(potwor);
 			});
+      
+      dane.obiekty.tabelaMonet.forEach(function(moneta) {
+				WykrywanieKolizji(moneta);
+			});
+            
 		},
 		
 		WykrywanieKolizji2: function(dane, p) {
@@ -98,7 +103,11 @@ var Fizyka = {
 						Smierc.wywolanie(dane);
 					}, 750);
 				}
-			}
+			} else if(obiekt.typ === "moneta") {
+        var nrMonety = dane.obiekty.tabelaMonet.indexOf(obiekt);
+        dane.obiekty.tabelaMonet.splice(nrMonety, 1);
+        mario.monety++;
+      }
 		},
 		
 		Kolizja2: function(obiekt, p) {

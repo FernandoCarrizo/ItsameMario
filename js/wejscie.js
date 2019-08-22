@@ -28,6 +28,9 @@ var Wejscie = {
 					for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
 						dane.obiekty.tabelaPotworow[i].x -= mario.pedX;
 					}
+          for( var i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
+						dane.obiekty.tabelaMonet[i].x -= mario.pedX;
+					}
 				}
 			}
 		}
@@ -46,6 +49,9 @@ var Wejscie = {
 					}
 					for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
 						dane.obiekty.tabelaPotworow[i].x += mario.pedX;
+					}
+          for( var i = 0; i<dane.obiekty.tabelaMonet.length; i++) {
+						dane.obiekty.tabelaMonet[i].x += mario.pedX;
 					}
 				}
 			}
