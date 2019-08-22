@@ -27,7 +27,7 @@ var Silnik = {
 		};
 		
 		Wejscie.ini(dane);
-		Obiekty.ini(dane);		
+		Obiekty.ini(dane);
 		Silnik.start(dane);
 	},
 	
@@ -50,8 +50,8 @@ var Silnik = {
 	},
 	
 	aktualizacje: function(dane) {
-		Animacje.aktualizacja(dane);
 		Poruszanie.aktualizacja(dane);
+		Animacje.aktualizacja(dane);
 		Fizyka.aktualizacja(dane);
 	},
 	

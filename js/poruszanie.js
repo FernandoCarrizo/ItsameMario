@@ -1,9 +1,11 @@
 var Poruszanie = {
 	aktualizacja: function(dane) {
-		Poruszanie.mario(dane);
+		Poruszanie.zadania.Mario(dane);
 	},
 	
-	mario: function(dane) {
-		dane.obiekty.mario.obecnyStan.ruch(dane);
+	zadania: {
+		Mario:function(dane) {
+			dane.obiekty.mario.obecnyStan.ruch(dane);
+		}
 	}
 }

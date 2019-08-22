@@ -26,3 +26,8 @@ canvas {
 #fg-canvas {
 	z-index: 3;
 }
+
+@font-face {
+	font-family: "PixelEmulator";
+	src: url("../font/Pixel Emulator.otf");
+}
