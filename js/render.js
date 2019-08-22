@@ -11,6 +11,10 @@ var Render = {
 		Render.zadania.Pisz("Lives: " + dane.obiekty.mario.zycia, dane.canvas.fgCtx, 16, 32, "16px", "PixelEmulator");
 		
 		if(dane.obiekty.mario.zycia<1) Render.zadania.Pisz("Game Over", dane.canvas.fgCtx, 200, 300, "72px", "PixelEmulator");
+		
+		dane.obiekty.tabelaPotworow.forEach(function(p) {
+			Render.zadania.Rysuj(p, dane.canvas.fgCtx);
+		});
 	},
 	
 	zadania: {

@@ -25,6 +25,9 @@ var Wejscie = {
 					for( var i = 0; i<dane.obiekty.tabelaScian.length; i++) {
 						dane.obiekty.tabelaScian[i].x -= mario.pedX;
 					}
+					for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
+						dane.obiekty.tabelaPotworow[i].x -= mario.pedX;
+					}
 				}
 			}
 		}
@@ -40,6 +43,9 @@ var Wejscie = {
 					dane.obiekty.mapa.x += mario.pedX;
 					for( var i = 0; i<dane.obiekty.tabelaScian.length; i++) {
 						dane.obiekty.tabelaScian[i].x += mario.pedX;
+					}
+					for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
+						dane.obiekty.tabelaPotworow[i].x += mario.pedX;
 					}
 				}
 			}

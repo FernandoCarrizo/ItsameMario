@@ -2,6 +2,7 @@ var Animacje = {
 	aktualizacja: function(dane) {
 		Animacje.zadania.Niebo(dane);
 		Animacje.zadania.Mario(dane);
+		Animacje.zadania.Potwor(dane);
 	},
 	
 	zadania: {
@@ -15,6 +16,12 @@ var Animacje = {
 		
 		Mario: function(dane) {
 			dane.obiekty.mario.obecnyStan.animacja(dane);
+		},
+		
+		Potwor: function(dane) {
+			dane.obiekty.tabelaPotworow.forEach(function(p) {
+				p.obecnyStan.animacja(dane);
+			});
 		}
 	}
 }

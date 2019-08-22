@@ -24,15 +24,22 @@ var Obiekty = {
 								[2352,432,384,96],[2352,528,1968,96],[2256,96,144,48],[2544,96,48,48],[2736,96,48,48],[2928,96,48,48],
 								[3120,144,48,48],[3024,336,48,48],[3216,336,48,48],[3504,480,288,48],[3552,432,240,48],[3600,384,192,48],
 								[3648,336,144,48],[3696,288,96,48],[3744,240,48,48],[-48,0,48,624],[4320,0,48,624]];
-		
+								
+		var potwory = [[0,0],[48,0]];
+										
 		dane.obiekty = {};
 		dane.obiekty.niebo = niebo;
 		dane.obiekty.mapa = mapa;
 		dane.obiekty.mario = mario;		
 		dane.obiekty.tabelaScian = [];
+		dane.obiekty.tabelaPotworow = [];
 		
 		sciany.forEach(function(z) {
 			dane.obiekty.tabelaScian.push(new Obiekty.zadania.Sciana(z[0],z[1],z[2],z[3]));
+		});
+		
+		potwory.forEach(function(p) {
+			dane.obiekty.tabelaPotworow.push(new Obiekty.zadania.Potwor(dane.grafika, p[0], p[1], 48, 48));
 		});
 	},
 	
@@ -106,6 +113,9 @@ var Obiekty = {
 								for( var i = 0; i<dane.obiekty.tabelaScian.length; i++) {
 									dane.obiekty.tabelaScian[i].x -= wnetrze.pedX;
 								}
+								for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
+									dane.obiekty.tabelaPotworow[i].x -= wnetrze.pedX;
+								}
 							}
 						} else {
 							if(wnetrze.x > dane.canvas.fgCanvas.width/2 || dane.obiekty.mapa.x >= 0) {
@@ -114,6 +124,9 @@ var Obiekty = {
 								dane.obiekty.mapa.x += wnetrze.pedX;
 								for( var i = 0; i<dane.obiekty.tabelaScian.length; i++) {
 									dane.obiekty.tabelaScian[i].x += wnetrze.pedX;
+								}
+								for( var i = 0; i<dane.obiekty.tabelaPotworow.length; i++) {
+									dane.obiekty.tabelaPotworow[i].x += wnetrze.pedX;
 								}
 							}
 						}
@@ -195,6 +208,7 @@ var Obiekty = {
 					}
 				}
 			};
+			this.obecnyStan = wnetrze.stan.poruszanie;
 			this.kierunek = "prawo";
 			this.pedY = 0;
 			this.pedX = 1;

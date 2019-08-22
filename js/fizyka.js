@@ -3,6 +3,11 @@ var Fizyka = {
 		Fizyka.zadania.Grawitacja(dane.obiekty.mario);
 		Fizyka.zadania.WykrywanieKolizji(dane);
 		Fizyka.zadania.Smierc(dane);
+		
+		dane.obiekty.tabelaPotworow.forEach(function(p) {
+			Fizyka.zadania.Grawitacja(p);
+			Fizyka.zadania.WykrywanieKolizji2(dane, p);
+		});
 	},
 	
 	zadania: {
@@ -29,6 +34,18 @@ var Fizyka = {
 			});
 		},
 		
+		WykrywanieKolizji2: function(dane, p) {
+			var WykrywanieKolizji2 = function(obiekt) {
+				if(p.x < obiekt.x + obiekt.w && p.x + p.w > obiekt.x && p.y < obiekt.y + obiekt.h && p.y + p.h > obiekt.y) {
+					Fizyka.zadania.Kolizja2(obiekt, p);
+				}
+			};
+			
+			dane.obiekty.tabelaScian.forEach(function(sciana) {
+				WykrywanieKolizji2(sciana);
+			});
+		},
+		
 		Kolizja: function(dane, obiekt) {
 			var mario = dane.obiekty.mario;
 			
@@ -50,6 +67,24 @@ var Fizyka = {
 				
 				if(mario.x > obiekt.x && mario.y + mario.h > obiekt.y && mario.y < obiekt.y + obiekt.h) {
 					mario.x = obiekt.x + obiekt.w;
+				}
+			}
+		},
+		
+		Kolizja2: function(obiekt, p) {
+			if(obiekt.typ === "sciana") {
+				if(p.y + p.h > obiekt.y && p.x + p.w > obiekt.x + 10 && p.x < obiekt.x + obiekt.w - 10 && p.pedY >= 0) {
+					p.obecnyStan = p.stan.poruszanie;
+					p.y = obiekt.y - p.h;
+					p.pedY = 0;
+				}
+				if(p.x < obiekt.x && p.y + p.h > obiekt.y && p.y < obiekt.y + obiekt.h) {
+					p.x = obiekt.x - p.w;
+					p.kierunek = "lewo";
+				}
+				if(p.x > obiekt.x && p.y + p.h > obiekt.y && p.y < obiekt.y + obiekt.h) {
+					p.x = obiekt.x + obiekt.w;
+					p.kierunek = "prawo";
 				}
 			}
 		},
