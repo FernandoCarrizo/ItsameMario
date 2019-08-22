@@ -84,6 +84,10 @@ var Fizyka = {
 					dane.obiekty.tabelaPotworow.splice(nrPotwora, 1);
 					mario.obecnyStan = mario.stan.skakanie;
 					mario.pedY = -20.5;
+          
+          dane.audio.skok.pause();
+          dane.audio.skok.currentTime = 0;
+          dane.audio.skok.play();
 				}
 				
 				if(mario.x<p.x && mario.y>= p.y) {
@@ -107,6 +111,8 @@ var Fizyka = {
         var nrMonety = dane.obiekty.tabelaMonet.indexOf(obiekt);
         dane.obiekty.tabelaMonet.splice(nrMonety, 1);
         mario.monety++;
+        
+        dane.audio.moneta.cloneNode(true).play();
       }
 		},
 		

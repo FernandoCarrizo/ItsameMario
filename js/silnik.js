@@ -23,12 +23,22 @@ var Silnik = {
 		var dane = {
 			nrKlatki: 0,
 			canvas: canvas,
-			grafika: grafika
+			grafika: grafika,
+      audio: {
+        melodia: new Audio("audio/theme_melody.mp3"),    
+        skok: new Audio("audio/jump_melody.mp3"),    
+        moneta: new Audio("audio/coin_melody.mp3") 
+      }
 		};
     
     dane.canvas.skyCtx.imageSmoothingEnabled = false;
     dane.canvas.bgCtx.imageSmoothingEnabled = false;
     dane.canvas.fgCtx.imageSmoothingEnabled = false;
+    
+    dane.audio.melodia.loop = true;
+    setTimeout(function() {
+      dane.audio.melodia.play();
+    },1000);
 		
 		Wejscie.ini(dane);
 		Obiekty.ini(dane);

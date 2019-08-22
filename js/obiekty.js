@@ -101,6 +101,10 @@ var Obiekty = {
 					ruch: function(dane) {
 						if(wnetrze.pedY==0) {
 							wnetrze.pedY-=23.5;
+              
+              dane.audio.skok.pause();
+              dane.audio.skok.currentTime = 0;
+              dane.audio.skok.play();
 						}
 					},
 					animacja: function(dane) {
