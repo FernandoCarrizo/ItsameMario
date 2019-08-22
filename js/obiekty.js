@@ -72,7 +72,7 @@ class Obiekty {
     });
 
     bloczkiCegiel.forEach(function(bc) {
-      dane.obiekty.tabelaBloczkowCegiel.push(new BloczekCegiel(dane.grafika, bc[0], bc[1], 48, 48));
-    });
+			dane.obiekty.tabelaBloczkowCegiel.push(new BloczekCegiel(dane.grafika, bc[0], bc[1], 48, 48));
+		});
   }
 }

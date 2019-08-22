@@ -7,8 +7,8 @@ class Fizyka {
 		});
 
     dane.obiekty.tabelaFragmentowCegiel.forEach((fc) => {
-      this.grawitacja(fc);
-    });
+			this.grawitacja(fc);
+		});
 
 		this.wykrywanieKolizji(dane);
 		this.smierc(dane);
