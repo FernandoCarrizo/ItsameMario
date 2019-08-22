@@ -152,6 +152,59 @@ var Obiekty = {
 			this.zycia = 3;
 		},
 		
+		Potwor: function(img, x, y, w, h) {
+			var wnetrze = this;
+			
+			this.obraz = new Obiekty.zadania.Obraz(img, 960, 240, 16, 16);
+			this.animacja = {
+				poruszanie: {
+					klatka: [new Obiekty.zadania.Obraz(img, 960, 240, 16, 16),
+								new Obiekty.zadania.Obraz(img, 976, 240, 16, 16),
+								new Obiekty.zadania.Obraz(img, 992, 240, 16, 16),
+								new Obiekty.zadania.Obraz(img, 1008, 240, 16, 16)],
+					obecnaKlatka: 0
+				},
+				skok: new Obiekty.zadania.Obraz(img, 960, 240, 16, 16)
+			};
+			this.stan = {
+				poruszanie: {
+					ruch: function(dane) {
+						if(wnetrze.kierunek === "prawo") {
+							wnetrze.x += wnetrze.pedX;
+						} else {
+							wnetrze.x -= wnetrze.pedX;
+						}
+					},
+					animacja: function(dane) {
+						if(dane.nrKlatki % 5 == 0) {
+							wnetrze.obraz = wnetrze.animacja.poruszanie.klatka[wnetrze.animacja.poruszanie.obecnaKlatka];
+							wnetrze.animacja.poruszanie.obecnaKlatka++;
+						}
+						
+						if(wnetrze.animacja.poruszanie.obecnaKlatka > 3) {
+							wnetrze.animacja.poruszanie.obecnaKlatka = 0;
+						}
+					}
+				},
+				skakanie: {
+					ruch: function(dane) {
+						return;
+					},
+					animacja: function(dane) {
+						wnetrze.obraz = wnetrze.animacja.skok;
+					}
+				}
+			};
+			this.kierunek = "prawo";
+			this.pedY = 0;
+			this.pedX = 1;
+			this.typ = "potwor";
+			this.x =x;
+			this.y = y;
+			this.w = w;
+			this.h = h;
+		},
+		
 		Sciana: function(x,y,w,h) {
 			this.x =x;
 			this.y = y;
