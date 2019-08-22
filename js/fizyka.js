@@ -1,5 +1,5 @@
 var Fizyka = {
-	aktualizacja: function(dane) {
+	aktualizacja: function(dane){
 		Fizyka.zadania.Grawitacja(dane.obiekty.mario);
 		Fizyka.zadania.WykrywanieKolizji(dane);
 	},
@@ -7,7 +7,7 @@ var Fizyka = {
 	zadania: {
 		Grawitacja: function(obiekt) {
 			obiekt.obecnyStan = obiekt.stan.skakanie;
-			obiekt.pedY+=1;
+			obiekt.pedY+=1.2;
 			obiekt.y+=obiekt.pedY;
 		},
 		
@@ -15,15 +15,15 @@ var Fizyka = {
 			var mario = dane.obiekty.mario;
 			
 			var WykrywanieKolizji = function(obiekt) {
-				if(mario.x < obiekt.x + obiekt.w &&
-				    mario.x + mario.w > obiekt.x &&
-				    mario.y < obiekt.y + obiekt.h &&
-				    mario.y +mario.h > obiekt.y) {
+				if(mario.x < obiekt.x +obiekt.w &&
+					mario.x + mario.w > obiekt.x &&
+					mario.y < obiekt.y + obiekt.h &&
+					mario.h + mario.y > obiekt.y) {
 						Fizyka.zadania.Kolizja(dane, obiekt);
 				}
-			}
+			};
 			
-			dane.obiekty.tabelaScian.forEach(function(sciana) {
+			dane.obiekty.tabelaScian.forEach(function (sciana) {
 				WykrywanieKolizji(sciana);
 			});
 		},
@@ -31,11 +31,20 @@ var Fizyka = {
 		Kolizja: function(dane, obiekt) {
 			var mario = dane.obiekty.mario;
 			
-			if(obiekt.typ === "sciana") {
-				if(mario.y+mario.h>obiekt.y && mario.x+mario.w > obiekt.x+10 && mario.x < obiekt.x+obiekt.w-10 && mario.pedY >= 0) {
+			if(obiekt.typ=="sciana") {
+				if (mario.y + mario.h > obiekt.y && (mario.x+ mario.w) > obiekt.x +10 && mario.x < (obiekt.x + obiekt.w) - 10 && mario.pedY >= 0) {
 					mario.obecnyStan = mario.stan.stanie;
 					mario.y = obiekt.y - mario.h;
 					mario.pedY = 0;
+				}
+				
+				if(mario.x + mario.w > (obiekt.x+16) && mario.x<obiekt.x+obiekt.w-16 && mario.y<obiekt.y+obiekt.h && mario.pedY < 0) {
+					mario.y = obiekt.y + obiekt.h;
+					mario.pedY = 1;
+				} else if(mario.x<obiekt.x && mario.y + mario.h > obiekt.y && mario.y < obiekt.y + obiekt.h) {
+					mario.x = obiekt.x - mario.w;
+				} else if(mario.x>obiekt.x && mario.y + mario.h > obiekt.y && mario.y < obiekt.y + obiekt.h) {
+					mario.x = obiekt.x + obiekt.w;
 				}
 			}
 		}

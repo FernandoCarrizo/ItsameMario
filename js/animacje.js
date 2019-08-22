@@ -1,11 +1,11 @@
 var Animacje = {
 	aktualizacja: function(dane) {
-		Animacje.zadania.Niebo(dane);
-		Animacje.zadania.Mario(dane);
+		Animacje.zadania.niebo(dane);
+		Animacje.zadania.mario(dane);
 	},
 	
 	zadania: {
-		Niebo: function(dane) {
+		niebo: function(dane) {
 			dane.obiekty.niebo.x -=1;
 			
 			if(dane.obiekty.niebo.x < -1440) {
@@ -13,7 +13,7 @@ var Animacje = {
 			}
 		},
 		
-		Mario: function(dane) {
+		mario: function(dane) {
 			dane.obiekty.mario.obecnyStan.animacja(dane);
 		}
 	}
