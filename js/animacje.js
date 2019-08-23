@@ -40,8 +40,8 @@ class Animacje {
 	}
 
   bloczekGrzybow(dane) {
-    dane.obiekty.tabelaBloczkowGrzybow.forEach((bg) => {
-      bg.obecnyStan.animacja(dane);
-    });
-  }
+		dane.obiekty.tabelaBloczkowGrzybow.forEach((bg) => {
+			bg.obecnyStan.animacja(dane);
+		});
+	}
 }

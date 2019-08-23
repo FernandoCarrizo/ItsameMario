@@ -95,7 +95,7 @@ class Mario {
     this.pedY = 1;
     this.pedX = 8;
     this.zycia = 3;
-    this.mozeNiszczyc = true;
+    this.mozeNiszczyc = false;
     this.momentSmierci = false;
     this.monety = 0;
     this.typ = "mario";

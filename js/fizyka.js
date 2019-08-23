@@ -7,14 +7,14 @@ class Fizyka {
 		});
 
     dane.obiekty.tabelaFragmentowCegiel.forEach((fc) => {
-      this.grawitacja(fc);
-    });
+			this.grawitacja(fc);
+		});
 
     dane.obiekty.tabelaGrzybow.forEach((g) => {
       if(g.obecnyStan != g.stan.wyjscie) {
         this.grawitacja(g);
       }
-    });
+		});
 
 		this.wykrywanieKolizji(dane);
 		this.smierc(dane);
@@ -127,7 +127,7 @@ class Fizyka {
     let stronaKolizji = this.stronaKolizji(obiekt1, obiekt2);
     if(obiekt1.typ === "mario") {
       let mario = obiekt1;
-      if(obiekt2.typ === "sciana" || obiekt2.typ === "bloczekMonet" || obiekt2.typ === "platforma" || obiekt2.typ === "bloczekCegiel" || obiekt2.typ === "bloczekGrzybow") {
+      if(obiekt2.typ === "sciana" || obiekt2.typ === "bloczekMonet" || obiekt2.typ === "platforma" || obiekt2.typ === "bloczekCegiel"  || obiekt2.typ === "bloczekGrzybow") {
         if(stronaKolizji[0]) {
           mario.obecnyStan = mario.stan.stanie;
           mario.y = obiekt2.y - mario.h;
