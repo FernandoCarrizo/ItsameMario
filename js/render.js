@@ -38,12 +38,16 @@ class Render {
 		});
 
     dane.obiekty.tabelaGrzybow.forEach((g) => {
-			this.rysuj(g, dane.canvas.fgCtx);
-		});
+      this.rysuj(g, dane.canvas.fgCtx);
+    });
 
     dane.obiekty.tabelaBloczkowGrzybow.forEach((bg) => {
-			this.rysuj(bg, dane.canvas.fgCtx);
-		});
+      this.rysuj(bg, dane.canvas.fgCtx);
+    });
+
+    dane.obiekty.tabelaPociskow.forEach((p) => {
+      this.rysuj(p, dane.canvas.fgCtx);
+    });
 
 		this.rysuj(dane.obiekty.mario, dane.canvas.fgCtx);
   }

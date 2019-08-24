@@ -38,6 +38,26 @@ class Wejscie {
 		if(this.nacisnieto(32) && !mario.momentSmierci && mario.obecnyStan != mario.stan.miganie) {
 			mario.obecnyStan = mario.stan.skakanie;
 		}
+
+    if(this.nacisnieto(17) && !mario.momentSmierci && mario.obecnyStan != mario.stan.miganie) {
+      if(mario.mozeStrzelac && mario.naladowany) {
+        mario.naladowany = false;
+        setTimeout(() => {
+          mario.naladowany = true;
+        }, 300);
+
+
+        let p = 5;
+        if(mario.kierunek === "prawo" || mario.pedX > 0) {
+          p = 10;
+        } else {
+          p = -10;
+        }
+        dane.obiekty.tabelaPociskow.push(
+          new Pocisk(dane.grafika, mario.x + mario.w/2, mario.y + mario.h/2, 24, 24, p)
+        );
+      }
+    }
   }
 
   nacisnieto(kod) {
