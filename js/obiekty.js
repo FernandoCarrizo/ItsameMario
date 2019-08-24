@@ -27,7 +27,7 @@ class Obiekty {
                   [6576,432,48,96],[6624,384,48,144],[6672,336,48,192],[6720,288,48,240],[6768,240,48,384],
                   [7056,528,288,96]];
 
-		let potwory = [[912, 480],[1440, 480], [2880, 480]];
+		let potwory = [[912, 480],[1440, 480],[2880, 480],[4896,480],[4992,480],[5088,480],[5184,480],[5280,480]];
 
     let monety = [[1008,240],[1056,192],[1104,144],[1152,96],[1200,96],[1248,144],[1296,192],[1344,240],
                   [3792,480],[3840,480],[3888,480],[3936,480],[3984,480],[4032,480],[4080,480],[4128,480],
@@ -37,9 +37,11 @@ class Obiekty {
 
     let platformy = [[4320,576,{min: 4320, max:4800}],[4800,384,{min: 4320, max:4800}]];
 
-    let bloczkiCegiel = [[480,336],[576,336],[672,336]];
+    let bloczkiCegiel = [[480,336],[576,336],[672,336],
+                         [4896,240],[4944,240],[4992,240],[5040,240],[5088,240],[5136,240],[5184,240],
+                         [5232,240],[5280,240],[5328,240],[5376,240],[5424,240],[5472,240],,];
 
-    let bloczkiGrzybow = [[528,336,"zycie"],[432,288,"powiekszenie"],[720,288,"strzelanie"]];
+    let bloczkiGrzybow = [[528, 336, "zycie"],[432, 288, "powiekszenie"],[720,288, "strzelanie"]];
 
 		dane.obiekty = {};
 		dane.obiekty.niebo = niebo;
@@ -54,6 +56,7 @@ class Obiekty {
     dane.obiekty.tabelaFragmentowCegiel = [];
     dane.obiekty.tabelaBloczkowGrzybow = [];
     dane.obiekty.tabelaGrzybow = [];
+    dane.obiekty.tabelaPociskow = [];
 
 		sciany.forEach(function(z) {
 			dane.obiekty.tabelaScian.push(new Sciana(z[0],z[1],z[2],z[3]));
@@ -76,11 +79,11 @@ class Obiekty {
     });
 
     bloczkiCegiel.forEach(function(bc) {
-			dane.obiekty.tabelaBloczkowCegiel.push(new BloczekCegiel(dane.grafika, bc[0], bc[1], 48, 48));
-		});
+      dane.obiekty.tabelaBloczkowCegiel.push(new BloczekCegiel(dane.grafika, bc[0], bc[1], 48, 48));
+    });
 
     bloczkiGrzybow.forEach(function(bg) {
-			dane.obiekty.tabelaBloczkowGrzybow.push(new BloczekGrzybow(dane.grafika, bg[0], bg[1], 48, 48, bg[2]));
-		});
+      dane.obiekty.tabelaBloczkowGrzybow.push(new BloczekGrzybow(dane.grafika, bg[0], bg[1], 48, 48, bg[2]));
+    });
   }
 }
