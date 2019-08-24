@@ -1,7 +1,7 @@
 class BloczekCegiel {
-	constructor(img, x,y,w,h) {
+  constructor(img, x,y,w,h) {
 		this.obraz = new Obraz(img, 3440, 128, 16, 16);
-		this.stan = {
+    this.stan = {
 			drganie: {
 				licznik: 0,
 				ruch: (dane) => {
@@ -10,7 +10,7 @@ class BloczekCegiel {
 						this.y -= 2;
 					} else if(this.obecnyStan.licznik<10){
 						this.y += 2;
-					} else{
+					} else {
 						this.obecnyStan.licznik = 0;
 						this.obecnyStan = this.stan.spoczynek;
 					}
@@ -27,9 +27,9 @@ class BloczekCegiel {
 		this.obecnyStan = this.stan.spoczynek;
 		this.x = x;
 		this.y = y;
-		this.sy = y;
+    this.sy = y;
 		this.w = w;
 		this.h = h;
 		this.typ = "bloczekCegiel";
 	}
-};
+}

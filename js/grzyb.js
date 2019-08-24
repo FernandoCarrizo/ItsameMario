@@ -6,7 +6,7 @@ class Grzyb {
     } else if(r == "powiekszenie") {
       this.obraz = new Obraz(img, 3408, 144, 16, 16);
       this.pedX = 2;
-    } else if(r == "strzelanie") {
+    } else if(r == "strzelanie"){
       this.obraz = new Obraz(img, 3440, 144, 16, 16);
       this.pedX = 0;
     }
@@ -17,13 +17,13 @@ class Grzyb {
         }
       },
       wyjscie: {
-        licznik: 0,
+        licznik : 0,
         ruch: (dane) => {
           this.obecnyStan.licznik++;
-          if(this.obecnyStan.licznik<5) {
-            this.pedY -= 2;
+          if(this.obecnyStan.licznik < 5) {
+            this.pedY-=2;
             this.y += this.pedY;
-          } else if(this.obecnyStan.licznik<8) {
+          } else if(this.obecnyStan.licznik < 8) {
             this.y += this.pedY;
           } else {
             this.obecnyStan = this.stan.poruszanie;
