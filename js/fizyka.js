@@ -1,6 +1,8 @@
 class Fizyka {
   aktualizacja(dane) {
-    this.grawitacja(dane.obiekty.mario);
+    if(dane.obiekty.mario.obecnyStan != dane.obiekty.mario.stan.miganie) {
+      this.grawitacja(dane.obiekty.mario);
+    }
 
 		dane.obiekty.tabelaPotworow.forEach((p) => {
 			this.grawitacja(p);
@@ -32,6 +34,8 @@ class Fizyka {
     if(dane.obiekty.mario.y > 624) {
       dane.obiekty.mario.momentSmierci = true;
       dane.kontroler.smierc.strataZycia(dane);
+     	dane.obiekty.mario.mozeStrzelac = false;
+     	dane.obiekty.mario.mozeNiszczyc = false;
     }
   }
 
@@ -46,7 +50,7 @@ class Fizyka {
     };
 
     let mario = dane.obiekty.mario;
-    if(!mario.momentSmierci) {
+    if(!mario.momentSmierci && mario.obecnyStan != mario.stan.miganie) {
       dane.obiekty.tabelaScian.forEach((sciana) => {
 				wykrywanieKolizji(mario, sciana);
 			});
@@ -73,7 +77,7 @@ class Fizyka {
     }
 
     dane.obiekty.tabelaPotworow.forEach((potwor) => {
-      if(!mario.momentSmierci) wykrywanieKolizji(mario, potwor);
+      if(!mario.momentSmierci && mario.obecnyStan != mario.stan.miganie) wykrywanieKolizji(mario, potwor);
 
       dane.obiekty.tabelaScian.forEach((sciana) => {
 				wykrywanieKolizji(potwor, sciana);
@@ -98,7 +102,7 @@ class Fizyka {
 
     dane.obiekty.tabelaGrzybow.forEach((grzyb) => {
       if(grzyb.obecnyStan != grzyb.stan.wyjscie) {
-        if(!mario.momentSmierci) wykrywanieKolizji(mario, grzyb);
+        if(!mario.momentSmierci && mario.obecnyStan != mario.stan.miganie) wykrywanieKolizji(mario, grzyb);
 
         dane.obiekty.tabelaScian.forEach((sciana) => {
   				wykrywanieKolizji(grzyb, sciana);
@@ -188,17 +192,48 @@ class Fizyka {
 					mario.pedY = -20.5;
         }
         if(stronaKolizji[1] || stronaKolizji[2] || stronaKolizji[3]) {
-          mario.obecnyStan = mario.stan.smierc;
-          mario.pedY = -20.5;
-          mario.momentSmierci = true;
-          setTimeout(() => {
-            dane.kontroler.smierc.strataZycia(dane);
-          }, 750);
+          if(mario.mozeStrzelac) {
+          	mario.obecnyStan = mario.stan.miganie;
+          	setTimeout(() => {
+          		mario.mozeStrzelac = false;
+          		mario.obecnyStan = mario.stan.stanie;
+          	}, 500);
+          } else if(mario.mozeNiszczyc) {
+          	mario.obecnyStan = mario.stan.miganie;
+          	setTimeout(() => {
+          		mario.mozeNiszczyc = false;
+          		mario.obecnyStan = mario.stan.stanie;
+          	}, 500);
+          } else {
+          	mario.momentSmierci = true;
+          	mario.obecnyStan = mario.stan.smierc;
+          	mario.pedY = -20.5;
+          	setTimeout(() => {
+          		dane.kontroler.smierc.strataZycia(dane);
+          	}, 750);
+          }
         }
       } else if(obiekt2.typ === "moneta") {
         let nrMonety = dane.obiekty.tabelaMonet.indexOf(obiekt2);
         dane.obiekty.tabelaMonet.splice(nrMonety, 1);
         mario.monety++;
+      } else if(obiekt2.typ === "grzyb") {
+      	let grzyb = obiekt2;
+      	if(grzyb.rodzaj === "zycie") {
+      		let nrGrzyba = dane.obiekty.tabelaGrzybow.indexOf(grzyb);
+      		dane.obiekty.tabelaGrzybow.splice(nrGrzyba, 1);
+      		mario.zycia++;
+      	} else if(grzyb.rodzaj === "powiekszenie") {
+      		let nrGrzyba = dane.obiekty.tabelaGrzybow.indexOf(grzyb);
+      		dane.obiekty.tabelaGrzybow.splice(nrGrzyba, 1);
+      		mario.mozeNiszczyc = true;
+      	} else if(grzyb.rodzaj === "strzelanie") {
+      		if(mario.mozeNiszczyc) {
+      			let nrGrzyba = dane.obiekty.tabelaGrzybow.indexOf(grzyb);
+      			dane.obiekty.tabelaGrzybow.splice(nrGrzyba, 1);
+      			mario.mozeStrzelac = true;
+      		}
+      	}
       }
     } else if(obiekt1.typ === "potwor") {
       let potwor = obiekt1;

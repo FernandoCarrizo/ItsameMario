@@ -13,7 +13,7 @@ class Wejscie {
   aktualizacja(dane) {
     let mario = dane.obiekty.mario;
 
-		if(this.nacisnieto(39) && !mario.momentSmierci) {
+		if(this.nacisnieto(39) && !mario.momentSmierci && mario.obecnyStan != mario.stan.miganie) {
 			mario.kierunek = "prawo";
       mario.pedX = 8;
 
@@ -22,7 +22,7 @@ class Wejscie {
       } else {
         mario.obecnyStan = mario.stan.skakanie;
       }
-		} else if(this.nacisnieto(37) && !mario.momentSmierci) {
+		} else if(this.nacisnieto(37) && !mario.momentSmierci && mario.obecnyStan != mario.stan.miganie) {
 			mario.kierunek = "lewo";
       mario.pedX = -8;
 
@@ -35,7 +35,7 @@ class Wejscie {
       mario.pedX = 0;
     }
 
-		if(this.nacisnieto(32) && !mario.momentSmierci) {
+		if(this.nacisnieto(32) && !mario.momentSmierci && mario.obecnyStan != mario.stan.miganie) {
 			mario.obecnyStan = mario.stan.skakanie;
 		}
   }

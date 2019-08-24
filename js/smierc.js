@@ -35,7 +35,7 @@ class Smierc {
         dane.obiekty.tabelaFragmentowCegiel[i].x -= dane.obiekty.mapa.x;
       }
       for(let i = 0; i<dane.obiekty.tabelaBloczkowGrzybow.length; i++) {
-        dane.obiekty.tabelaGrzybow[i].x -= dane.obiekty.mapa.x;
+        dane.obiekty.tabelaBloczkowGrzybow[i].x -= dane.obiekty.mapa.x;
       }
       for(let i = 0; i<dane.obiekty.tabelaGrzybow.length; i++) {
         dane.obiekty.tabelaGrzybow[i].x -= dane.obiekty.mapa.x;
